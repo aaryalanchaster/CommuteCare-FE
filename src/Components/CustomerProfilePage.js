@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import './ProfilePage.css';
 
-import { displayCustomerProfile } from '../Routes/Login/AuthService';
+import { displayCustomerProfile, logout } from "../Routes/Login/AuthService";
+import { useNavigate } from "react-router-dom";
 import i18n from "../Translation/i18n";
 import { initReactI18next, useTranslation, Translation } from "react-i18next";
 const CustomerProfilePage = () => {
@@ -61,7 +62,7 @@ const CustomerProfilePage = () => {
                   {t("GenderLabel")}: {gender}
                 </h4>
                 <h4>
-                  {t("GenderLabel")}: {mob}
+                  {t("PhoneNumberLabel")}: {mob}
                 </h4>
                 <h4>
                   {t("DateofBirthLabel")}: {dob}

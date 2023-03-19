@@ -7,7 +7,7 @@ import "./SignUpPage.css";
 import logo from "../Assets/logo.jpg";
 import image from "../Assets/home-page.jpg";
 
-import { additionalDetails } from "../Routes/Login/AuthService";
+import { additionalDetails, logout } from "../Routes/Login/AuthService";
 import { useNavigate } from "react-router-dom";
 
 import InputLabel from "@mui/material/InputLabel";
@@ -169,6 +169,13 @@ const AdditionalCustomerDetails = () => {
       navigate("/customer");
     } catch (error) {
       console.error("error", error);
+      if (
+        error.response.data.message === "jwt expired" ||
+        error.response.data.message === "jwt malformed"
+      ) {
+        logout();
+        navigate("/");
+      }
     }
   };
 
