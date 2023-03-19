@@ -12,8 +12,10 @@ import {
   rejectBooking,
 } from "../Routes/Login/AuthService";
 import "./History.css";
-
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
 const HistoryHelper = () => {
+  const { t } = useTranslation();
   const [bookings, setbookings] = useState([]);
   const [isPendingBookings, setisPendingBookings] = useState(true);
   const [isrefresh, setisrefresh] = useState(false);
@@ -100,96 +102,25 @@ const HistoryHelper = () => {
           isPendingBookings ? (
             <div className="booking-card" key={index}>
               <div className="booking-name">
-                {`${booking.user.firstname ?? "No first name"} ${
-                  booking.user.lastname ?? "No last name"
+                {`${booking.user.firstname ?? t("errorNoFirstName")} ${
+                  booking.user.lastname ?? t("errorNoLastName")
                 }`}
               </div>
-              <div className="booking-card-text">Location: </div>
+              <div className="booking-card-text">{t("LocationLabel")}: </div>
               <div className="booking-card-day-time">
-                <div>Day: {booking.day}</div>
-                <div>Time: {moment(booking.starttime).utc().format("HH:mm")}</div>
+                <div>
+                  {t("Day")}: {booking.day}
+                </div>
+                <div>
+                  {t("Time")}: {moment(booking.starttime).utc().format("HH:mm")}
+                </div>
               </div>
-              <div className="booking-card-text">Duration: {booking.duration} mins</div>
-              
-              <div className="card-buttons">
-              <Button
-                      variant="outlined"
-                      sx={{
-                        ":hover": {
-                          bgcolor: "#006e5f4a",
-                          borderColor: "#006E60",
-                        },
-                        color: "white",
-                        backgroundColor: "#00720B",
-                        borderColor: "#006E60",
-                        width: 100,
-                      }}
-                      
-                      onClick={() => handleAccept(booking._id)}
-                    >Accept</Button>
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        ":hover": {
-                          bgcolor: "#006e5f4a",
-                          borderColor: "#006E60",
-                        },
-                        color: "red",
-                        background: "none",
-                        borderColor: "red",
-                        width: 100,
-                        
-                      }}
-                      
-                      onClick={() => handleReject(booking._id)}
-                    >Reject</Button>
-                
+              <div className="booking-card-text">
+                {t("DurationLabel")}: {booking.duration} {t("minsLabel")}
               </div>
-            </div>
-          ) : (
-            <div className="booking-card" key={index}>
-              <div className="booking-name">
-                {`${booking.user.firstname ?? "No first name"} ${
-                  booking.user.lastname ?? "No last name"
-                }`}
-              </div>
-              <div className="booking-card-text">Location: </div>
-              <div className="booking-card-day-time">
-                <div>Day: {booking.day}</div>
-                <div>Time: {moment(booking.starttime).utc().format("HH:mm")}</div>
-              </div>
-              <div className="booking-card-text">Duration: {booking.duration} mins</div>
-              <div className="card-buttons">
-              <Button
-                      variant="outlined"
-                      sx={{
-                        ":hover": {
-                          bgcolor: "#006e5f4a",
-                          borderColor: "#006E60",
-                        },
-                        color: "white",
-                        backgroundColor: "#00720B",
-                        borderColor: "#006E60",
-                        width: 100,
-                      }}
-                      onClick={(e)=> {
-                        e.preventDefault();
-                        goTochatPage(booking.user._id, booking.user.firstname, booking.user.lastname);
 
-                        // console.log("UserId <<", booking.user._id);
-                        // setId(booking.user._id);
-                        // console.log("UserId", Id);
-                        // navigate('/chat',{state:{Id}});
-                      }}
-                      
-                    >chat</Button>
-              </div>
-            </div>
-          )
-        )}
-      </div>
-      <div className="history-buttons">
-      <Button
+              <div className="card-buttons">
+                <Button
                   variant="outlined"
                   sx={{
                     ":hover": {
@@ -199,16 +130,11 @@ const HistoryHelper = () => {
                     color: "white",
                     backgroundColor: "#00720B",
                     borderColor: "#006E60",
-                    ...(!isPendingBookings ? {
-                      backgroundColor: "#D4FFBC",
-                      color: "#024F09"
-                    } : {color: "white",
-                    backgroundColor: "#00720B",}),
+                    width: 100,
                   }}
-                  size="large"
-                  onClick={() => setisPendingBookings(true)}
+                  onClick={() => handleAccept(booking._id)}
                 >
-                  Pending
+                  {t("AcceptBtn")}
                 </Button>
                 <Button
                   variant="outlined"
@@ -217,21 +143,113 @@ const HistoryHelper = () => {
                       bgcolor: "#006e5f4a",
                       borderColor: "#006E60",
                     },
-                    backgroundColor: "#00720B",
-                      color: "white",
-                    borderColor: "#006E60",
-                    ...(isPendingBookings && {
-                      color: "#024F09",
-                    backgroundColor: "#D4FFBC",
-                      
-                    }),
+                    color: "red",
+                    background: "none",
+                    borderColor: "red",
+                    width: 100,
                   }}
-                  size="large"
-                  onClick={() => setisPendingBookings(false)}
+                  onClick={() => handleReject(booking._id)}
                 >
-                  Confirmed
+                  {t("RejectBtn")}
                 </Button>
-        
+              </div>
+            </div>
+          ) : (
+            <div className="booking-card" key={index}>
+              <div className="booking-name">
+                {`${booking.user.firstname ?? t("errorNoFirstName")} ${
+                  booking.user.lastname ?? t("errorNoLastName")
+                }`}
+              </div>
+              <div className="booking-card-text">t("LocationLabel"): </div>
+              <div className="booking-card-day-time">
+                <div>
+                  {t("Day")}: {booking.day}
+                </div>
+                <div>
+                  {t("Time")}: {moment(booking.starttime).utc().format("HH:mm")}
+                </div>
+              </div>
+              <div className="booking-card-text">
+                {t("DurationLabel")}: {booking.duration} mins
+              </div>
+              <div className="card-buttons">
+                <Button
+                  variant="outlined"
+                  sx={{
+                    ":hover": {
+                      bgcolor: "#006e5f4a",
+                      borderColor: "#006E60",
+                    },
+                    color: "white",
+                    backgroundColor: "#00720B",
+                    borderColor: "#006E60",
+                    width: 100,
+                  }}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    goTochatPage(
+                      booking.user._id,
+                      booking.user.firstname,
+                      booking.user.lastname
+                    );
+
+                    // console.log("UserId <<", booking.user._id);
+                    // setId(booking.user._id);
+                    // console.log("UserId", Id);
+                    // navigate('/chat',{state:{Id}});
+                  }}
+                >
+                  {t("ChatBtn")}
+                </Button>
+              </div>
+            </div>
+          )
+        )}
+      </div>
+      <div className="history-buttons">
+        <Button
+          variant="outlined"
+          sx={{
+            ":hover": {
+              bgcolor: "#006e5f4a",
+              borderColor: "#006E60",
+            },
+            color: "white",
+            backgroundColor: "#00720B",
+            borderColor: "#006E60",
+            ...(!isPendingBookings
+              ? {
+                  backgroundColor: "#D4FFBC",
+                  color: "#024F09",
+                }
+              : { color: "white", backgroundColor: "#00720B" }),
+          }}
+          size="large"
+          onClick={() => setisPendingBookings(true)}
+        >
+          {t("PendingBtn")}
+        </Button>
+        <Button
+          variant="outlined"
+          sx={{
+            ":hover": {
+              bgcolor: "#006e5f4a",
+              borderColor: "#006E60",
+            },
+            backgroundColor: "#00720B",
+            color: "white",
+            borderColor: "#006E60",
+            ...(isPendingBookings && {
+              color: "#024F09",
+              backgroundColor: "#D4FFBC",
+            }),
+          }}
+          size="large"
+          onClick={() => setisPendingBookings(false)}
+        >
+          {t("ConfirmedBtn")}
+        </Button>
       </div>
     </div>
   );

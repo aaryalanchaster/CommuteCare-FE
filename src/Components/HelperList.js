@@ -56,10 +56,10 @@ const HelperList = (props) => {
   };
   console.log(user);
 
-  useEffect(() => {
+ useEffect(() => {
+
     const fetchData = async () => {
       try {
-
           console.log("Day", days[props.Day]);
           setIsLoading(true);
           await displayAvailHelperList(days[props.Day], props.Time, props.Duration).then(
@@ -68,19 +68,14 @@ const HelperList = (props) => {
           console.log("Response:",formData);
         } catch (error) {
           console.error('error', error);
-          setjwtError(error.response.data.message);
-          
-          if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
-            logout();
-            navigate('/');
-          }
-
         }
-      }
-      setIsLoading(false);
-    };
+        setIsLoading(false);
+    }
     fetchData();
-  }, []);
+    
+    
+  }, []); 
+
 
   console.log("formData:", formData);
   return (

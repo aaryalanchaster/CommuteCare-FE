@@ -14,7 +14,8 @@ import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import Textarea from "@mui/joy/Textarea";
 import dayjs from 'dayjs';
-
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
 import useHistoryState from "use-history-state";
 import { DatePicker } from "@mui/x-date-pickers";
 import { width } from "@mui/system";
@@ -28,6 +29,7 @@ import {
 import moment from "moment/moment";
 
 const Reservation = () => {
+  const { t } = useTranslation();
   const [date, setDate] = useHistoryState(null, "date");
 
   const [time, setTime] = useHistoryState(null, "time");
@@ -57,7 +59,7 @@ const Reservation = () => {
 
     
     if (!date || !time || !selectedOption || !location) {
-      alert("fill all columns");
+      alert(t("FillColumns"));
       return false;
     }
 
@@ -92,9 +94,8 @@ const Reservation = () => {
                 <DatePicker
                   variant="standard"
                   value={date}
-                  label="Date of Travel"
-                  onChange={setDate
-                  }
+                  label={t("DateofTravel")}
+                  onChange={setDate}
                   minDate={new Date()}
                   required
                   renderInput={(params) => (
@@ -105,7 +106,7 @@ const Reservation = () => {
 
               <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DesktopTimePicker
-                  label="Train Time"
+                  label={t("TimeofTravel")}
                   value={time}
                   ampm={false}
                   onChange={setTime}
@@ -115,7 +116,7 @@ const Reservation = () => {
             </div>
 
             <div className="time-required">
-              <p className="label">Duration</p>
+              <p className="label">{t("DurationLabel")}</p>
               <Stack
                 spacing={2}
                 direction="row"
@@ -131,7 +132,7 @@ const Reservation = () => {
                   }
                   onClick={() => handleOptionClick("15")}
                 >
-                  15 Mins
+                  15 {t("minsLabel")}
                 </Button>
                 <Button
                   variant="outlined"
@@ -142,7 +143,7 @@ const Reservation = () => {
                   }
                   onClick={() => handleOptionClick("30")}
                 >
-                  30 Mins
+                  30 {t("minsLabel")}
                 </Button>
                 <Button
                   variant="outlined"
@@ -153,7 +154,7 @@ const Reservation = () => {
                   }
                   onClick={() => handleOptionClick("60")}
                 >
-                  60 Mins
+                  60 {t("minsLabel")}
                 </Button>
                 <Button
                   variant="outlined"
@@ -164,7 +165,7 @@ const Reservation = () => {
                   }
                   onClick={() => handleOptionClick("100")}
                 >
-                  1+ HR
+                  1+ {t("hourLabel")}
                 </Button>
               </Stack>
             </div>
@@ -185,32 +186,30 @@ const Reservation = () => {
                   marginTop: 5,
                 }}
                 inputProps={{ maxLength: 150 }}
-                label="Travel Description"
+                label={t("AdditonalDescription")}
               />
             </div>
             <div className="location">
               <FormControl variant="standard" sx={{ width: 300 }} error={false}>
-                <InputLabel id="location">Location</InputLabel>
+                <InputLabel id="location">{t("LocationLabel")}</InputLabel>
                 <Select
                   labelId="location"
                   id="location"
                   value={location}
-                  label="Location"
+                  label={t("LocationLabel")}
                   onChange={(e) => {
                     setLocation(e.target.value);
                   }}
                   required
                 >
-                  {stations.map((station,index) =>
-                        <MenuItem key={index} value={station}>
-                        {station}
-                      </MenuItem>
-                  )}
-                 
-                  
+                  {stations.map((station, index) => (
+                    <MenuItem key={index} value={station}>
+                      {station}
+                    </MenuItem>
+                  ))}
                 </Select>
                 <FormHelperText>
-                  {false ? "Enter Nationality Code" : ""}
+                  {false ? t("errorNationalityCode") : ""}
                 </FormHelperText>
               </FormControl>
             </div>
@@ -231,14 +230,13 @@ const Reservation = () => {
                 size="large"
                 onClick={handleSubmit}
               >
-                Show Helpers
+                {t("showHelpersBtn")}
               </Button>
             </div>
           </div>
 
           <div className="image">
             <img src={image} alt="login-img" className="actual-img" />
-            
           </div>
         </div>
       </div>

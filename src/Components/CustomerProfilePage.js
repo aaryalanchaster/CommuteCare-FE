@@ -56,7 +56,7 @@ const CustomerProfilePage = () => {
       ) : (
         <>
           <div className="profile-container">
-            <h2>Personal Details</h2>
+              <h2>{t("personaldetails")}</h2>
             <div className="profile-div">
               <div className="profile-content">
                 <h3>

@@ -7,8 +7,10 @@ import logo from "../Assets/logo.jpg";
 import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 // import './Password-icons.css';
-
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
 const NewPassword = () => {
+  const { t } = useTranslation();
   const [password, setPassword] = useState("");
   const [passwordFlag, setPasswordFlag] = useState(false);
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -40,7 +42,7 @@ const NewPassword = () => {
   const handlePasswordChange = (password) => {
     // setPassword(event.target.value);
      if (!validatePassword(password)) {
-       setPasswordError('Your password must contain 1 upper case character, 1 number, 1 special character');
+       setPasswordError(t("errorPasswordRegex"));
        setPasswordFlag(true);
        return true;
      } else {
@@ -53,7 +55,7 @@ const NewPassword = () => {
    const handleConfirmPasswordChange = (confirmPassword) => {
     //setConfirmPassword(event.target.value);
     if (!validatePassword(confirmPassword)) {
-      setConfrimPassError('Your password must contain 1 upper case character, 1 number, 1 special character');
+      setConfrimPassError(t("errorPasswordRegex"));
       setConfirmPasswordFlag(true);
       return true;
     }
@@ -71,15 +73,15 @@ const NewPassword = () => {
     if(handlePasswordChange(password) || handleConfirmPasswordChange(confirmPassword)){
       
       if(password.length===0){
-        setPasswordError('Enter Password');
+        setPasswordError(t("errorEnterPassword"));
         setPasswordFlag(true);
       }
       if(confirmPassword.length === 0){
-        setConfrimPassError('Enter Password');
+        setConfrimPassError(t("errorEnterPassword"));
         setConfirmPasswordFlag(true);
       }
       if(password !== confirmPassword){
-        setConfrimPassError("Make sure the passwords are identical");
+        setConfrimPassError(t("errorIdenticalPassword"));
       }
       return false;
     }
@@ -101,90 +103,95 @@ const NewPassword = () => {
 
   };
   return (
-    <div className='new-password-page'>
-      <div className='logo'>
-          <img src={logo} alt='logo-img' className='logo-img'></img>
+    <div className="new-password-page">
+      <div className="logo">
+        <img src={logo} alt="logo-img" className="logo-img"></img>
       </div>
-    <div className='newPassword'>
-        <form onSubmit={handleSubmit} className='signup-form'>
-        <div className='newPassword-container'>
-           <label className='forgot-label'>Let’s get your account back. Enter the new password</label>
-           <TextField id="signUp" 
-              label="Password" 
+      <div className="newPassword">
+        <form onSubmit={handleSubmit} className="signup-form">
+          <div className="newPassword-container">
+            <label className="forgot-label">{t("NewPasswordTitle")}</label>
+            <TextField
+              id="signUp"
+              label={t("PasswordLabel")}
               variant="standard"
-              error = {passwordFlag}
+              error={passwordFlag}
               helperText={passwordError}
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               InputProps={{
-                endAdornment: <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
-              sx={{width: 300,
-                marginTop: 3
-              }}
+              sx={{ width: 300, marginTop: 3 }}
               value={password}
               onChange={(e) => {
                 setPassword(e.target.value);
-                }}
-              required/>
-          
-          
+              }}
+              required
+            />
 
-          <TextField id="signUp" 
-              label="Confirm Password" 
+            <TextField
+              id="signUp"
+              label={t("ConfirmPasswordLabel")}
               variant="standard"
-              error = {confirmPasswordFlag}
+              error={confirmPasswordFlag}
               helperText={confrimPassError}
-              type={showConfirmPassword ? 'text' : 'password'}
+              type={showConfirmPassword ? "text" : "password"}
               InputProps={{
-                endAdornment: <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={handleClickShowConfirmPassword}
-                  onMouseDown={handleMouseDownPassword}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>,
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowConfirmPassword}
+                      onMouseDown={handleMouseDownPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
               }}
-              sx={{width: 300,
-                marginTop: 3
-              }}
+              sx={{ width: 300, marginTop: 3 }}
               value={confirmPassword}
               onChange={(e) => {
                 setConfirmPassword(e.target.value);
-                }}
-              required/>
-          
-          <div className='newPassword-button'>
-              <Button variant='outlined' sx={{
-                            ":hover": {
-                            bgcolor: "#006e5f4a",
-                            borderColor: "#006E60",
-                            },
-                            color: "white",
-                            backgroundColor: "#00720B",
-                            borderColor: "#006E60",
-                          }} size="large" onClick={handleSubmit}>
-                            Submit
-                        </Button>
+              }}
+              required
+            />
 
+            <div className="newPassword-button">
+              <Button
+                variant="outlined"
+                sx={{
+                  ":hover": {
+                    bgcolor: "#006e5f4a",
+                    borderColor: "#006E60",
+                  },
+                  color: "white",
+                  backgroundColor: "#00720B",
+                  borderColor: "#006E60",
+                }}
+                size="large"
+                onClick={handleSubmit}
+              >
+                {t("SubmitBtn")}
+              </Button>
+            </div>
           </div>
-        </div>
         </form>
+      </div>
     </div>
-    </div>
-    
-  )
+  );
 }
 
 export default NewPassword

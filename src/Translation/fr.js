@@ -1,5 +1,4 @@
 export default {
-  // AdditionalCustomerDetails
   //error
   errorAlphabets: "Entrez uniquement les alphabets",
   errorGender: "Entrez le sexe",
@@ -16,7 +15,20 @@ export default {
   errorDeclined: "Réservation refusée",
   errorValidEmail: "Veuillez saisir une adresse e-mail valide",
   errorEmail: "Entrez l’adresse e-mail",
+  errorEnterTitle: "Entrez le titre du numéro",
+  errorIssueDescription: "Entrez la description du problème",
   errorInvalidTime: "Heure non valide",
+  errorNoFirstName: "Pas de prénom",
+  errorNoLastName: "Pas de nom de famille",
+  errorEmail: "Veuillez saisir une adresse e-mail valide",
+  errorPassword: "Mot de passe incorrect",
+  errorEnterPassword: "Entrez le mot de passe",
+  errorPasswordRegex:
+    "Votre mot de passe doit contenir 1 caractère majuscule, 1 chiffre, 1 caractère spécial",
+  errorIdenticalPassword: "Assurez-vous que les mots de passe sont identiques",
+  errorNationalityCode: "Entrez le code de nationalité",
+  errorFeedback: "Saisir les commentaires",
+  errorRating: "Veuillez sélectionner la note",
   //label
   FirstNameLabel: "Prénom",
   LastNameLabel: "Nom",
@@ -37,6 +49,8 @@ export default {
   DescriptionLabel: "Description",
   Day: "Jour",
   Date: "Date",
+  Time: "Heure",
+  DurationLabel: "Durée",
   NameLabel: "Nom",
   EmailLabel: "Messagerie électronique",
   LoadingLabel: "Chargement...",
@@ -57,9 +71,26 @@ export default {
   To: "À",
   PeopleHelped: "Les gens entassés",
   GetStarted: "Démarrer",
+  LocationLabel: "Emplacement",
+  minsLabel: "mins",
+  hourLabel: "heure",
+  PasswordLabel: "Mot de passe",
+  ForgotPasswordLabel: "Mot de passe oublié?",
+  ConfirmPasswordLabel: "Confirmer le mot de passe",
+  NewUserLabel: "Nouvel utilisateur ? S’enregistrer",
+  IssueLabel: "Titre du numéro",
+  AdditonalDescription: "Description supplémentaire",
+  DateofTravel: "Date du voyage",
+  TimeofTravel: "Temps en voyage",
+  FeedbackTitle:
+    "Nous apprécions vos commentaires. Aidez-nous à améliorer nos services",
   //placeholder
   BioPH: "Entrez votre biographie ici (limite de 150 mots)",
   TypePH: "Tapez ici...",
+  HomeTitle: "Votre confort, notre priorité!",
+  NewPasswordTitle: "Récupérons votre compte. Entrez le nouveau mot de passe",
+  IssuePH: "Décrivez votre problème ici (limite de 150 mots)",
+  FeedbackPH: "Commentaires (limite de 150 mots)",
   //buttons
   SubmitBtn: "Envoyer",
   HomeBtn: "Domicile",
@@ -72,9 +103,25 @@ export default {
   MoreInfoBtn: "Plus d’infos",
   BookNowBtn: "Réservez maintenant",
   LessInfoBtn: "Moins d’infos",
+  CancelBtn: "Annuler",
+  CurrentBtn: "Courante",
+  HistoryBtn: "Histoire",
+  AcceptBtn: "Accepter",
+  RejectBtn: "Rejeter",
+  PendingBtn: "En instance",
+  ConfirmedBtn: "Confirmé",
+  StartBtn: "Commencer",
+  GetHelpBtn: "Obtenir de l’aide",
+  HelpSomeoneBtn: "Aidez quelqu’un",
+  LoginBtn: "Connectez-vous",
+  showHelpersBtn: "Afficher les aides",
+  //alert
+  FillColumns: "Remplir toutes les colonnes",
   //NAV
   Home: "Domicile",
   Booking: "Réservation",
   Profile: "Profil",
   Logout: "Déconnexion",
+
+  personaldetails: "Données personnelles",
 };
