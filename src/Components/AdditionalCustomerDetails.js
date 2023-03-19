@@ -7,8 +7,10 @@ import "./SignUpPage.css";
 import logo from "../Assets/logo.jpg";
 import image from "../Assets/home-page.jpg";
 
+
 import { additionalDetails, logout } from "../Routes/Login/AuthService";
 import { useNavigate } from "react-router-dom";
+
 
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -175,6 +177,7 @@ const AdditionalCustomerDetails = () => {
       ) {
         logout();
         navigate("/");
+
       }
     }
   };

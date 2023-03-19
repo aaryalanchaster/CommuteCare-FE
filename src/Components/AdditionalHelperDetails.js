@@ -10,7 +10,7 @@ import image from '../Assets/home-page.jpg';
 
 
 
-import { additionalDetailsHelper } from '../Routes/Login/AuthService';
+import { additionalDetailsHelper, logout } from '../Routes/Login/AuthService';
 import { nationalityPlaces } from '../Assets/data';
 import { DatePicker } from '@mui/x-date-pickers';
 import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
@@ -205,6 +205,10 @@ const AdditionalHelperDetails = () => {
       navigate('/helperAvailability');
     } catch (error) {
       console.error('error', error);
+      if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+        logout();
+        navigate('/');
+      }
     }
     
     

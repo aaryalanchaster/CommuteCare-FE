@@ -44,3 +44,8 @@ ul{
   align-items: center;
   margin: 3% 40%;
 }
+
+
+.alert-custom {
+  padding-top: 40px;
+}

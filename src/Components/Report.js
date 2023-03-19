@@ -1,8 +1,10 @@
 import React from "react";
 import "./ReviewAndReport.css";
 import { useState } from "react";
-import { Button, TextField } from "@mui/material";
+import { Alert, AlertTitle, Button, TextField } from "@mui/material";
 import NavBar from "./NavBar";
+import { logout, reportIssue } from "../Routes/Login/AuthService";
+import { useNavigate } from "react-router-dom";
 
 const Report = () => {
   const [email, setEmail] = useState("");
@@ -16,6 +18,12 @@ const Report = () => {
   const [issueDescription, setissueDescription] = useState("");
   const [issueDescriptionFlag, setissueDescriptionFlag] = useState(false);
   const [issueDescriptionError, setissueDescriptionError] = useState("");
+
+  const [success, setsuccess] = useState(false);
+
+  const navigate = useNavigate();
+
+  
 
   const validateEmail = (email) => {
     const regex =
@@ -55,7 +63,7 @@ const Report = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     var flag = true;
     if (
@@ -79,7 +87,20 @@ const Report = () => {
     }
 
     //after successful submission
+    try {
+      await reportIssue(email,issueTitle, issueDescription).then((response) => {
+        console.log(response);
+        setsuccess(true);
+      });
+    } catch (error) {
+      console.error("error", error);
+      if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+        logout();
+        navigate('/');
+      }
+    }
   };
+  
 
   return (
     <div className="report">
@@ -155,7 +176,16 @@ const Report = () => {
             </Button>
           </div>
         </div>
+        <div className="alert-custom">
+        
+        { success && <Alert severity="success">
+          <AlertTitle>Report submitted successfully</AlertTitle>
+          Thank your time!
+        </Alert>}
+        </div>
+        
       </div>
+      
     </div>
   );
 };

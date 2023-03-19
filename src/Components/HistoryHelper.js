@@ -8,6 +8,7 @@ import {
   getHelperPendings,
   getUserBookings,
   getUserHistory,
+  logout,
   rejectBooking,
 } from "../Routes/Login/AuthService";
 import "./History.css";
@@ -27,6 +28,10 @@ const HistoryHelper = () => {
       });
     } catch (error) {
       console.error("error", error);
+      if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+        logout();
+        navigate('/');
+      }
     }
   };
   const getConfirmedBookings = async () => {
@@ -36,6 +41,10 @@ const HistoryHelper = () => {
       });
     } catch (error) {
       console.error("error", error);
+      if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+        logout();
+        navigate('/');
+      }
     }
   };
 
@@ -48,6 +57,10 @@ const HistoryHelper = () => {
       });
     } catch (error) {
       console.error("error", error);
+      if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+        logout();
+        navigate('/');
+      }
     }
   };
   const handleReject = async (id) => {
@@ -59,6 +72,10 @@ const HistoryHelper = () => {
       });
     } catch (error) {
       console.error("error", error);
+      if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+        logout();
+        navigate('/');
+      }
     }
   };
 

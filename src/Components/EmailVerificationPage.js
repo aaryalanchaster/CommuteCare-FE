@@ -8,7 +8,7 @@ import Button from '@mui/material/Button';
 
 import logo from "../Assets/logo.jpg";
 
-import { verifyOTP, resendOTP, resendOTPHelper, verifyOTPHelper } from '../Routes/Login/AuthService';
+import { verifyOTP, resendOTP, resendOTPHelper, verifyOTPHelper, logout } from '../Routes/Login/AuthService';
 
 import i18n from "../Translation/i18n";
 import { initReactI18next, useTranslation, Translation } from "react-i18next";
@@ -48,7 +48,10 @@ const ForgotPasswordPage = (props) => {
             await resendOTP(email);
           } catch (error) {
             console.error('error', error);
-            
+            if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+              logout();
+              navigate('/');
+            }
           }
     }
     if(userType ==='Helper'){
@@ -56,7 +59,10 @@ const ForgotPasswordPage = (props) => {
             await resendOTPHelper(email);
           } catch (error) {
             console.error('error', error);
-            
+            if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+              logout();
+              navigate('/');
+            }
           }
     }
     
@@ -76,9 +82,14 @@ const ForgotPasswordPage = (props) => {
             navigate('/additionalDetails');
           } catch (error) {
             console.error('error', error);
+            if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+              logout();
+              navigate('/');
+            }
             setOtpError(error.response.data.message);
             setTryCount(tryCount + 1);
             setOtp("");
+            
           }
     }
     if(userType ==='Helper'){
@@ -87,7 +98,12 @@ const ForgotPasswordPage = (props) => {
             
             navigate('/additionalDetails');
           } catch (error) {
+            
             console.error('error', error);
+            if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+              logout();
+              navigate('/');
+            }
             setOtpError(error.response.data.message);
             setTryCount(tryCount + 1);
             setOtp("");

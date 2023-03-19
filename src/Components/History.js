@@ -6,6 +6,7 @@ import {
   cancelBooking,
   getUserBookings,
   getUserHistory,
+  logout,
 } from "../Routes/Login/AuthService";
 import "./History.css";
 
@@ -23,6 +24,10 @@ const History = () => {
       });
     } catch (error) {
       console.error("error", error);
+      if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+        logout();
+        navigate('/');
+      }
     }
   };
   const getHistoryData = async () => {
@@ -33,6 +38,10 @@ const History = () => {
       });
     } catch (error) {
       console.error("error", error);
+      if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+        logout();
+        navigate('/');
+      }
     }
   };
 
@@ -44,6 +53,10 @@ const History = () => {
       });
     } catch (error) {
       console.error("error", error);
+      if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+        logout();
+        navigate('/');
+      }
     }
   };
 

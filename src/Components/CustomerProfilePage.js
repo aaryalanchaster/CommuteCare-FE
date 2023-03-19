@@ -3,10 +3,12 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import './ProfilePage.css';
 
+
 import { displayCustomerProfile, logout } from "../Routes/Login/AuthService";
 import { useNavigate } from "react-router-dom";
 import i18n from "../Translation/i18n";
 import { initReactI18next, useTranslation, Translation } from "react-i18next";
+
 const CustomerProfilePage = () => {
     const { t } = useTranslation();
     const [firstname, setfirstname] = useState("");
@@ -15,7 +17,8 @@ const CustomerProfilePage = () => {
     const [gender, setgender] = useState("");
     const [mob, setmob] = useState("");
     const [dob, setdob] = useState("");
-   
+
+    const navigate = useNavigate();
   
     const [isLoading, setisLoading] = useState(false);
 
@@ -36,6 +39,10 @@ const CustomerProfilePage = () => {
                 //setresult(res);
               } catch (error) {
                 console.error('error', error);
+                if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+                  logout();
+                  navigate('/');
+                }
               }
               setisLoading(false);
         }
@@ -72,6 +79,7 @@ const CustomerProfilePage = () => {
           </div>
         </>
       )}
+
     </div>
   );
 }

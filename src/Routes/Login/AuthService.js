@@ -451,3 +451,17 @@ export const cancelBooking = async (bookingId) => {
   });
   return response;
 };
+
+export const reportIssue = async (email, title, description) => {
+  const token = localStorage.getItem("User");
+  const response = axios.post(`${url}/report`,{
+    email: email,
+    title: title,
+    detailedDescription: description,
+   } ,{
+    headers: {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+    },
+  });
+  return response;
+};

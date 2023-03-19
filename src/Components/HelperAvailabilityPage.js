@@ -5,10 +5,12 @@ import { useState } from "react";
 import Calendar from "react-calendar";
 import TimeField from "react-simple-timefield";
 
-import { editAvailability, getAvailability } from "../Routes/Login/AuthService";
+import { editAvailability, getAvailability, logout } from "../Routes/Login/AuthService";
 import { Button } from "@mui/material";
+
 import i18n from "../Translation/i18n";
 import { initReactI18next, useTranslation, Translation } from "react-i18next";
+
 const HelperAvailabilityPage = () => {
   const { t } = useTranslation();
   const [date, setDate] = useState(null);
@@ -39,6 +41,8 @@ const HelperAvailabilityPage = () => {
   const [startTimeSun, setStartTimeSun] = useState("");
   const [endTimeSun, setEndTimeSun] = useState("");
 
+  const navigate = useNavigate();
+
   const [showAvailability, setShowAvailability] = useState({
     Monday: `${startTimeMon}${endTimeMon}`,
     Tuesday: `${startTimeTue}${endTimeTue}`,
@@ -52,6 +56,8 @@ const HelperAvailabilityPage = () => {
   const [getAvailabilityInPage, setgetAvailabilityInPage] = useState("");
 
   const helperId = localStorage.getItem("HelperID");
+
+  
 
   useEffect(() => {
     setShowAvailability({
@@ -119,6 +125,10 @@ const HelperAvailabilityPage = () => {
       );
     } catch (error) {
       console.error("error", error);
+      if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
+        logout();
+        navigate('/');
+      }
     }
   };
 
