@@ -5,7 +5,11 @@ import './ProfilePage.css';
 
 import { displayHelperProfile } from '../Routes/Login/AuthService';
 
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
+
 const HelperProfilePage = () => {
+  const { t } = useTranslation();
     const [firstname, setfirstname] = useState("");
     const [lastname, setlastname] = useState("");
     const [email, setemail] = useState("");
@@ -46,26 +50,46 @@ const HelperProfilePage = () => {
     }, [])
     
   return (
-    <div className='profile'>
-        {
-            isLoading ? <div>Loading.....</div> : <>
-                    <div className='profile-container'>
-                    <h3>Name: {firstname} {lastname}</h3>
-                    <h4>Email: {email}</h4>
-                    <h4>Gender: {gender}</h4>
-                    <h4>Phone: {mob}</h4>
-                    <h4>Date of Birth: {dob}</h4>
-                    <h4>id: {id}</h4>
-                    <h4>Description: {description}</h4>
-                    <h4>Nationality: {nationality}</h4>
-                    <h4>Booking: {bookings}</h4>
-                    <div><h4>Availability: </h4><pre>{JSON.stringify(availability, null, 100)}</pre></div>
-                    </div>
-            </>
-        }
-        
+    <div className="profile">
+      {isLoading ? (
+        <div>Loading.....</div>
+      ) : (
+        <>
+          <div className="profile-container">
+            <h3>
+              {t("NameLabel")}: {firstname} {lastname}
+            </h3>
+            <h4>
+              {t("EmailLabel")}: {email}
+            </h4>
+            <h4>
+              {t("GenderLabel")}: {gender}
+            </h4>
+            <h4>
+              {t("PhoneNumberLabel")}: {mob}
+            </h4>
+            <h4>
+              {t("DateofBirthLabel")}: {dob}
+            </h4>
+            {/* <h4>id: {id}</h4> */}
+            <h4>
+              {t("DescriptionLabel")}: {description}
+            </h4>
+            <h4>
+              {t("NationalityLabel")}: {nationality}
+            </h4>
+            <h4>
+              {t("BookingLabel")}: {bookings}
+            </h4>
+            <div>
+              <h4>{t("AvailabilityLabel")}: </h4>
+              <pre>{JSON.stringify(availability, null, 100)}</pre>
+            </div>
+          </div>
+        </>
+      )}
     </div>
-  )
+  );
 }
 
 export default HelperProfilePage

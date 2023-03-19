@@ -4,8 +4,10 @@ import { useEffect } from 'react';
 import './ProfilePage.css';
 
 import { displayCustomerProfile } from '../Routes/Login/AuthService';
-
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
 const CustomerProfilePage = () => {
+    const { t } = useTranslation();
     const [firstname, setfirstname] = useState("");
     const [lastname, setlastname] = useState("");
     const [email, setemail] = useState("");
@@ -40,29 +42,37 @@ const CustomerProfilePage = () => {
     }, [])
     
   return (
-    <div className='profile'>
-        {
-            isLoading ? <div>Loading.....</div> : <>
-                    
-                    <div className='profile-container'>
-                    <h2>Personal Details</h2>
-                      <div className='profile-div'> 
-                        <div className='profile-content'>
-                          <h3>Name: {firstname} {lastname}</h3>
-                          <h4>Email: {email}</h4>
-                          <h4>Gender: {gender}</h4>
-                          <h4>Phone: {mob}</h4>
-                          <h4>Date of Birth: {dob}</h4>
-                          
-                        
-                        </div>
-                      </div>
-                    </div>
-            </>
-        }
-        
+    <div className="profile">
+      {isLoading ? (
+        <div>{t("LoadingLabel")}</div>
+      ) : (
+        <>
+          <div className="profile-container">
+            <h2>Personal Details</h2>
+            <div className="profile-div">
+              <div className="profile-content">
+                <h3>
+                  {t("NameLabel")}: {firstname} {lastname}
+                </h3>
+                <h4>
+                  {t("EmailLabel")}: {email}
+                </h4>
+                <h4>
+                  {t("GenderLabel")}: {gender}
+                </h4>
+                <h4>
+                  {t("GenderLabel")}: {mob}
+                </h4>
+                <h4>
+                  {t("DateofBirthLabel")}: {dob}
+                </h4>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
-  )
+  );
 }
 
 export default CustomerProfilePage
