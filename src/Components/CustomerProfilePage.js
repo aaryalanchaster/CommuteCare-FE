@@ -9,8 +9,10 @@ import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { Button, FormControl, FormHelperText, InputAdornment, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { AccountCircle, LocalPhone, Mail } from '@mui/icons-material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
 const CustomerProfilePage = () => {
+    const { t } = useTranslation();
     const [firstName, setFirstName] = useState("");
     const [fnameErrorFlag, setfnameErrorFlag] = useState(false);
     const [fnameError, setfnameError] = useState("");
@@ -36,7 +38,7 @@ const CustomerProfilePage = () => {
     const handleFirstNameChange = (firstName) => {
       const regex = /^[A-Za-z\s]*$/;
       if (!regex.test(firstName)) {
-        setfnameError('Enter only alphabets');
+        setfnameError(t("errorAlphabets"));
         setfnameErrorFlag(true);
         return true;
       }
@@ -50,7 +52,7 @@ const CustomerProfilePage = () => {
     const handleLastNameChange = (lastName) => {
       const regex = /^[A-Za-z\s]*$/;
       if (!regex.test(lastName)) {
-        setlnameError('Enter only alphabets');
+        setlnameError(t("errorAlphabets"));
         setlnameErrorFlag(true);
         return true;
       }
@@ -63,7 +65,7 @@ const CustomerProfilePage = () => {
   
     const handleGenderChange = (gender) => {
       if(!gender){
-        setgenderError("Enter gender");
+        setgenderError(t("errorGender"));
         setgenderErrorFlag(true);
         return true;
       }
@@ -76,7 +78,7 @@ const CustomerProfilePage = () => {
     const handlePhoneChange = (phone) => {
       const regex = /^\d{10}$/;
       if (!regex.test(phone)) {
-        setPhoneError('Number Invalid');
+        setPhoneError(t("errorNumber"));
         setPhoneErrorFlag(true);
         return true;
       }
@@ -91,7 +93,7 @@ const CustomerProfilePage = () => {
   
     const handleDobChange = (dob) => {
       if(!dob){
-        setdobError("Enter DOB");
+        setdobError(t("errorDOB"));
         setdobErrorFlag(true);
         return true;
       }
@@ -109,19 +111,19 @@ const CustomerProfilePage = () => {
            || handleGenderChange(gender)
       ){
         if(firstName.length === 0){
-          setfnameError('Enter First Name');
+          setfnameError(t("errorFirstName"));
           setfnameErrorFlag(true);
         }
         if(lastName.length === 0){
-          setlnameError('Enter Last Name');
+          setlnameError(t("errorLastName"));
           setlnameErrorFlag(true);
         }
         if(phone.length === 0){
-          setPhoneError('Enter Phone Number');
+          setPhoneError(t("errorPhoneNumber"));
           setPhoneErrorFlag(true);
         }
         if(!dob){
-          setdobError("Enter DOB");
+          setdobError(t("errorDOB"));
           setdobErrorFlag(true);
         }
         if(!gender){
@@ -173,6 +175,7 @@ const CustomerProfilePage = () => {
     }, [])
     
   return (
+
     <div className='profile'>
         {
             isLoading ? <div>Loading.....</div> : <>
@@ -184,7 +187,7 @@ const CustomerProfilePage = () => {
                         <TextField
                              error = {fnameErrorFlag}
                              helperText={fnameError}
-                             label="First Name"
+                             label={t("FirstNameLabel")}
                              InputProps={{
                                startAdornment: (
                                  <InputAdornment position="start">
@@ -205,7 +208,7 @@ const CustomerProfilePage = () => {
                            <TextField
                             error = {lnameErrorFlag}
                             helperText={lnameError}
-                             label="Last Name"
+                             label={t("LastNameLabel")}
                              InputProps={{
                                startAdornment: (
                                  <InputAdornment position="start">
@@ -225,7 +228,7 @@ const CustomerProfilePage = () => {
                            />
                            <TextField
                              
-                             label="Email"
+                             label={t("EmailLabel")}
                              InputProps={{
                                startAdornment: (
                                  <InputAdornment position="start">
@@ -244,21 +247,21 @@ const CustomerProfilePage = () => {
                            />
 
                            <FormControl variant="standard" sx={{width: "70%", marginTop: "5%", textAlign: 'left'}} error={genderErrorFlag}>
-                             <InputLabel id="gender">Gender</InputLabel>
+                             <InputLabel id="gender">{t("GenderLabel")}</InputLabel>
                              <Select
                                labelId="gender"
                                id="gender"
                                value={gender}
-                               label="gender"
+                               label={t("GenderLabel")}
                                onChange={(e) => {
                                 setGender(e.target.value);}}
                                required
                              
                              >
-                               <MenuItem value="Male">Male</MenuItem>
-                               <MenuItem value="Female">Female</MenuItem>
-                               <MenuItem value="Others">Others</MenuItem>
-                               <MenuItem value="Prefer not to say">Prefer not to say</MenuItem>
+                               <MenuItem value="Male">{t("MaleGender")}</MenuItem>
+                               <MenuItem value="Female">{t("FemaleGender")}</MenuItem>
+                               <MenuItem value="Others">{t("OtherGender")}</MenuItem>
+                               <MenuItem value="Prefer not to say">{t("PreferNSGender")}</MenuItem>
                              </Select>
                              <FormHelperText>{genderErrorFlag? "Enter gender": ""}</FormHelperText>
                            </FormControl>
@@ -266,7 +269,7 @@ const CustomerProfilePage = () => {
                            <TextField
                              error = {phoneErrorFlag}
                              helperText={phoneError}
-                             label="Phone"
+                             label={t("PhoneNumberLabel")}
                              InputProps={{
                                startAdornment: (
                                  <InputAdornment position="start">
@@ -290,7 +293,7 @@ const CustomerProfilePage = () => {
                                    variant="standard"
                                    value={dob}
                                    sx={{width: "70%", marginTop: "5%",}}
-                                   label="Date of Birth"
+                                   label={t("DateofBirthLabel")}
                                    onChange={(newValue) => {
                                     setDob(newValue);
                                   }}
@@ -318,7 +321,7 @@ const CustomerProfilePage = () => {
                                   marginTop: "10%",
                                   
                                 }} size="large"  onClick={handleSubmit}>
-                                  Save
+                                  {t("SaveBtn")}
                               </Button>
                            </div>
                           

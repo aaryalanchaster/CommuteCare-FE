@@ -5,8 +5,10 @@ import { Alert, AlertTitle, Button, TextField } from "@mui/material";
 import NavBar from "./NavBar";
 import { logout, reportIssue } from "../Routes/Login/AuthService";
 import { useNavigate } from "react-router-dom";
-
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
 const Report = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [emailFlag, setEmailFlag] = useState(false);
   const [emailError, setEmailError] = useState("");
@@ -29,7 +31,7 @@ const Report = () => {
     const regex =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!regex.test(email)) {
-      setEmailError("Please enter a valid email address");
+      setEmailError(t("errorValidEmail"));
       setEmailFlag(true);
       return true;
     } else {
@@ -41,7 +43,7 @@ const Report = () => {
 
   const checkIssueTitle = (issueTitle) => {
     if (!issueTitle) {
-      setissueTitleError("Enter the title for the issue");
+      setissueTitleError(t("errorEnterTitle"));
       setissueTitleFlag(true);
       return true;
     } else {
@@ -53,7 +55,7 @@ const Report = () => {
 
   const checkIssueDescription = (issueDescription) => {
     if (!issueDescription) {
-      setissueDescriptionError("Enter the issue description");
+      setissueDescriptionError(t("errorIssueDescription"));
       setissueDescriptionFlag(true);
       return true;
     } else {
@@ -72,15 +74,15 @@ const Report = () => {
       checkIssueDescription(issueDescription)
     ) {
       if (email.length === 0) {
-        setEmailError("Enter Email");
+        setEmailError(t("errorEmail"));
         setEmailFlag(true);
       }
       if (!issueTitle) {
         setissueTitleFlag(true);
-        setissueTitleError("Enter the title for the issue");
+        setissueTitleError(t("errorEnterTitle"));
       }
       if (!issueDescription) {
-        setissueDescriptionError("Enter the issue description");
+        setissueDescriptionError(t("errorIssueDescription"));
         setissueDescriptionFlag(true);
       }
       return false;
@@ -109,7 +111,7 @@ const Report = () => {
         <div className="report-content">
           <TextField
             id="email"
-            label="email"
+            label={t("EmailLabel")}
             variant="standard"
             error={emailFlag}
             helperText={emailError}
@@ -124,7 +126,7 @@ const Report = () => {
 
           <TextField
             id="issueTitle"
-            label="Title of the issue"
+            label={t("IssueLabel")}
             variant="standard"
             error={issueTitleFlag}
             helperText={issueTitleError}
@@ -142,7 +144,7 @@ const Report = () => {
             onChange={(e) => {
               setissueDescription(e.target.value);
             }}
-            placeholder="Describe your issue  here (150 wordlimit)"
+            placeholder={t("IssuePH")}
             multiline
             rows={3}
             maxRows={4}
@@ -172,20 +174,19 @@ const Report = () => {
               size="large"
               onClick={handleSubmit}
             >
-              Submit
+              {t("SubmitBtn")}
             </Button>
           </div>
         </div>
         <div className="alert-custom">
-        
-        { success && <Alert severity="success">
-          <AlertTitle>Report submitted successfully</AlertTitle>
-          Thank your time!
-        </Alert>}
+          {success && (
+            <Alert severity="success">
+              <AlertTitle>Report submitted successfully</AlertTitle>
+              Thank your time!
+            </Alert>
+          )}
         </div>
-        
       </div>
-      
     </div>
   );
 };

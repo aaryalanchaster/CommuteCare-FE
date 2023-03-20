@@ -3,8 +3,10 @@ import './ReviewAndReport.css';
 import logo from "../Assets/logo.jpg";
 import { Alert, Button, FormControl, NativeSelect, Rating, TextField } from '@mui/material';
 import { useState } from 'react';
-
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
 const Review = () => {
+  const { t } = useTranslation();
     const [star, setstar] = useState(0);
     const [starErrorFlag, setstarErrorFlag] = useState(null);
     const [starError, setstarError] = useState("");
@@ -17,7 +19,7 @@ const Review = () => {
 
     const checkFeedback = (feedback) => {
         if(!feedback){
-            setfeedbackError("Enter feedback");
+            setfeedbackError(t("errorFeedback"));
             setfeedbackErrorFlag(true);
             return true;
           }
@@ -32,13 +34,13 @@ const Review = () => {
         e.preventDefault();
     
         if(checkFeedback(feedback)){
-            setfeedbackError("Enter feedback");
+            setfeedbackError(t("errorFeedback"));
             setfeedbackErrorFlag(true);
             return false;
           }
         if(!star){
             setstarErrorFlag(true);
-            setstarError("Please select the rating")
+            setstarError(t("errorRating"));
             return false;
         }  
 
@@ -47,6 +49,7 @@ const Review = () => {
     };
 
   return (
+<<<<<<< HEAD
     <div className='review'>
         <div className='logo'>
           <img src={logo} alt='logo-img' className='logo-img'></img>
@@ -64,72 +67,76 @@ const Review = () => {
                     <option value="Spanish">es-ES</option>
                     </NativeSelect>
                 </FormControl>
+=======
+    <div className="review">
+      <div className="logo">
+        <img src={logo} alt="logo-img" className="logo-img"></img>
+>>>>>>> c45b339b5bd8b86622d15ab8cb600735f0215788
       </div>
-        <div className='review-container'>
-            <div className='review-contents'>
-                <p className='forgot-label'>We Value Your Feedback. Help Us Improve Our Services</p>
-                <div className='review-stars'>
-                    <Rating
-                        name="simple-controlled"
-                        value={star}
-                        sx={{
-                            fontSize: '5rem',
-                            marginTop: 5,
-                            
-                        }}
-                        size="large"
-                        onChange={(e) => {
-                            setstar(e.target.value);
-                        }}
-                    />
-                </div>
-                <TextField
-                        id="feedback"
-                        value={feedback}
-                        onChange={(e) => {
-                            setfeedback(e.target.value);}}
-                        placeholder="Feedback (150 wordlimit)"
-                        multiline
-                        rows={3}
-                        maxRows={4}
-                        sx={{
-                            width: 400,
-                            marginTop: 5,
-                            marginLeft: '20%'
-                        }}
-                        inputProps={{ maxLength: 150 }}
-                        error={feedbackErrorFlag}
-                        helperText={feedbackError}
-                        label='Feedback'
-                        />
-                <div className='review-button'>
-                        <Button variant='outlined' sx={{
-                            ":hover": {
-                            bgcolor: "#006e5f4a",
-                            borderColor: "#006E60",
-                            },
-                            color: "white",
-                            backgroundColor: "#00720B",
-                            borderColor: "#006E60",
-                          }} size="large" onClick={handleSubmit}>
-                            Submit
-                        </Button>
-
-                </div>
-                
-                    
-                
-            </div>
+      <div className="review-container">
+        <div className="review-contents">
+          <p className="forgot-label">{t("FeedbackTitle")}</p>
+          <div className="review-stars">
+            <Rating
+              name="simple-controlled"
+              value={star}
+              sx={{
+                fontSize: "5rem",
+                marginTop: 5,
+              }}
+              size="large"
+              onChange={(e) => {
+                setstar(e.target.value);
+              }}
+            />
+          </div>
+          <TextField
+            id="feedback"
+            value={feedback}
+            onChange={(e) => {
+              setfeedback(e.target.value);
+            }}
+            placeholder={t("FeedbackPH")}
+            multiline
+            rows={3}
+            maxRows={4}
+            sx={{
+              width: 400,
+              marginTop: 5,
+              marginLeft: "20%",
+            }}
+            inputProps={{ maxLength: 150 }}
+            error={feedbackErrorFlag}
+            helperText={feedbackError}
+            label="Feedback"
+          />
+          <div className="review-button">
+            <Button
+              variant="outlined"
+              sx={{
+                ":hover": {
+                  bgcolor: "#006e5f4a",
+                  borderColor: "#006E60",
+                },
+                color: "white",
+                backgroundColor: "#00720B",
+                borderColor: "#006E60",
+              }}
+              size="large"
+              onClick={handleSubmit}
+            >
+              {t("SubmitBtn")}
+            </Button>
+          </div>
         </div>
-        {
-                    starErrorFlag &&
-                    <Alert variant="outlined" severity="error" className='alert-left'>
-                    {starError}
-                  </Alert> 
-                  
-                }
+      </div>
+      {starErrorFlag && (
+        <Alert variant="outlined" severity="error" className="alert-left">
+          {starError}
+        </Alert>
+      )}
     </div>
-  )
+  );
 }
 
 export default Review

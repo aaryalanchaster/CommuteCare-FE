@@ -12,9 +12,15 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
+<<<<<<< HEAD
 import { FormControl, NativeSelect } from "@mui/material";
 
+=======
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
+>>>>>>> c45b339b5bd8b86622d15ab8cb600735f0215788
 const SignUpPage = (props) => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [emailFlag, setEmailFlag] = useState(false);
   const [emailError, setEmailError] = useState("");
@@ -43,7 +49,7 @@ const SignUpPage = (props) => {
     const regex =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!regex.test(email)) {
-      setEmailError("Please enter a valid email address");
+      setEmailError(t("errorValidEmail"));
       setEmailFlag(true);
       return true;
     } else {
@@ -62,9 +68,7 @@ const SignUpPage = (props) => {
   const handlePasswordChange = (password) => {
     // setPassword(event.target.value);
     if (!validatePassword(password)) {
-      setPasswordError(
-        "Your password must contain 1 upper case character, 1 number, 1 special character"
-      );
+      setPasswordError(t("errorPasswordRegex"));
       setPasswordFlag(true);
       return true;
     } else {
@@ -77,9 +81,7 @@ const SignUpPage = (props) => {
   const handleConfirmPasswordChange = (confirmPassword) => {
     //setConfirmPassword(event.target.value);
     if (!validatePassword(confirmPassword)) {
-      setConfrimPassError(
-        "Your password must contain 1 upper case character, 1 number, 1 special character"
-      );
+      setConfrimPassError(t("errorPasswordRegex"));
       setConfirmPasswordFlag(true);
       return true;
     } else {
@@ -97,19 +99,19 @@ const SignUpPage = (props) => {
       handleConfirmPasswordChange(confirmPassword)
     ) {
       if (email.length === 0) {
-        setEmailError("Enter Email");
+        setEmailError(t("errorEmail"));
         setEmailFlag(true);
       }
       if (password.length === 0) {
-        setPasswordError("Enter Password");
+        setPasswordError(t("errorEnterPassword"));
         setPasswordFlag(true);
       }
       if (confirmPassword.length === 0) {
-        setConfrimPassError("Enter Password");
+        setConfrimPassError(t("errorEnterPassword"));
         setConfirmPasswordFlag(true);
       }
       if (password !== confirmPassword) {
-        setConfrimPassError("Make sure the passwords are identical");
+        setConfrimPassError(t("errorIdenticalPassword"));
       }
       return false;
     }
@@ -159,7 +161,7 @@ const SignUpPage = (props) => {
             <div className="signup-field">
               <TextField
                 id="signUp"
-                label="Email"
+                label={t("EmailLabel")}
                 variant="standard"
                 error={emailFlag}
                 helperText={emailError}
@@ -182,7 +184,7 @@ const SignUpPage = (props) => {
             <div className="signup-field">
               <TextField
                 id="signUp"
-                label="Password"
+                label={t("PasswordLabel")}
                 variant="standard"
                 error={passwordFlag}
                 helperText={passwordError}
@@ -217,7 +219,7 @@ const SignUpPage = (props) => {
             <div className="signup-field">
               <TextField
                 id="signUp"
-                label="Confirm Password"
+                label={t("ConfirmPasswordLabel")}
                 variant="standard"
                 error={confirmPasswordFlag}
                 helperText={confrimPassError}
@@ -265,7 +267,7 @@ const SignUpPage = (props) => {
                   size="large"
                   onClick={handleSubmit}
                 >
-                  Submit
+                  {t("SubmitBtn")}
                 </Button>
               </div>
             </div>

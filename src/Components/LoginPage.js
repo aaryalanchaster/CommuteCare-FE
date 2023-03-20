@@ -11,9 +11,15 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
+<<<<<<< HEAD
 import { FormControl, NativeSelect } from "@mui/material";
 
+=======
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
+>>>>>>> c45b339b5bd8b86622d15ab8cb600735f0215788
 const LoginPage = (props) => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [emailFlag, setEmailFlag] = useState(false);
   const [password, setPassword] = useState("");
@@ -40,7 +46,7 @@ const LoginPage = (props) => {
     const regex =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!regex.test(email)) {
-      setEmailError("Please enter a valid email address");
+      setEmailError(t("errorEmail"));
       setEmailFlag(true);
       return true;
     } else {
@@ -53,7 +59,7 @@ const LoginPage = (props) => {
   const handlePasswordChange = (password) => {
     if (!validatePassword(password)) {
       setPasswordError(
-        "Incorrect Password"
+        t("errorPassword")
       );
       setPasswordFlag(true);
       return true;
@@ -68,10 +74,10 @@ const LoginPage = (props) => {
     e.preventDefault();
     if (validateEmail(email) || handlePasswordChange(password)) {
       if (email.length === 0) {
-        setEmailError("Enter Email");
+        setEmailError(t("errorEmail"));
       }
       if (password.length === 0) {
-        setPasswordError("Enter Password");
+        setPasswordError(t("errorEnterPassword"));
       }
       return false;
     }
@@ -123,7 +129,7 @@ const LoginPage = (props) => {
             <div className="input-withIcons">
               <TextField
                 id="login"
-                label="Email"
+                label={t("EmailLabel")}
                 variant="standard"
                 error={emailFlag}
                 helperText={emailError}
@@ -146,7 +152,7 @@ const LoginPage = (props) => {
           <div className="login-container">
             <TextField
               id="login"
-              label="Password"
+              label={t("PasswordLabel")}
               variant="standard"
               error={passwordFlag}
               helperText={passwordError}
@@ -184,7 +190,7 @@ const LoginPage = (props) => {
                 state={{ userType: props.data }}
                 className="login-link"
               >
-                Forgot password?
+                {t("ForgotPasswordLabel")}
               </Link>
             </div>
             <div className="new">
@@ -193,7 +199,7 @@ const LoginPage = (props) => {
                 state={{ userType: props.data }}
                 className="login-link"
               >
-                New User? Sign up
+                {t("NewUserLabel")}
               </Link>
             </div>
           </div>
@@ -213,7 +219,7 @@ const LoginPage = (props) => {
               size="large"
               onClick={handleLoginClick}
             >
-              Login
+              {t("LoginBtn")}
             </Button>
           </div>
         </form>

@@ -9,10 +9,11 @@ import {
   logout,
 } from "../Routes/Login/AuthService";
 import "./History.css";
-
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
 const History = () => {
   const navigate = useNavigate();
-
+  const { t } = useTranslation();
   const [bookings, setbookings] = useState([]);
   const [isCurrentBookings, setisCurrentBookings] = useState(true);
   const [isrefresh, setisrefresh] = useState(false);
@@ -79,128 +80,146 @@ const History = () => {
         {bookings.map((booking, index) =>
           isCurrentBookings ? (
             <div className="booking-card" key={index}>
-              
               <div className="booking-name">
-                {`${booking.helper.firstname ?? "No first name"} ${
-                  booking.helper.lastname ?? "No last name"
+                {`${booking.helper.firstname ?? t("errorNoFirstName")} ${
+                  booking.helper.lastname ?? t("errorNoLastName")
                 }`}
               </div>
-              <div className="booking-card-text">Location:{booking.location}</div>
-              <div className="booking-card-day-time">
-                <div>Day: {booking.day}</div>
-                <div>Time: {moment(booking.starttime).utc().format("HH:mm")}</div>
+              <div className="booking-card-text">
+                t("LocationLabel"):{booking.location}
               </div>
-              <div className="booking-card-text">Duration: {booking.duration} mins</div>
+              <div className="booking-card-day-time">
+                <div>t("Day"): {booking.day}</div>
+                <div>
+                  t("Time"): {moment(booking.starttime).utc().format("HH:mm")}
+                </div>
+              </div>
+              <div className="booking-card-text">
+                t("DurationLabel"): {booking.duration} mins
+              </div>
               {booking.status === "pending" ? (
-                <div className={`booking-card-status-${booking.status}`}><span className={`booking-card-status-dot-${booking.status}`}></span>{booking.status}</div>
+                <div className={`booking-card-status-${booking.status}`}>
+                  <span
+                    className={`booking-card-status-dot-${booking.status}`}
+                  ></span>
+                  {booking.status}
+                </div>
               ) : (
                 <div className="card-buttons">
-                      <Button
-                      variant="outlined"
-                      sx={{
-                        ":hover": {
-                          bgcolor: "#006e5f4a",
-                          borderColor: "#006E60",
-                        },
-                        color: "white",
-                        backgroundColor: "#00720B",
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      ":hover": {
+                        bgcolor: "#006e5f4a",
                         borderColor: "#006E60",
-                        width: 100,
-                      }}
-                      
-                      onClick={(e) => {
-                        e.preventDefault();
-                        goTochatPage(booking.helper._id, booking.helper.firstname, booking.helper.lastname);
-                      }}
-
-                    >Chat</Button>
-                    <Button
-                      variant="outlined"
-                      sx={{
-                        ":hover": {
-                          bgcolor: "#006e5f4a",
-                          borderColor: "#006E60",
-                        },
-                        color: "red",
-                        background: "none",
-                        borderColor: "red",
-                        width: 100,
-                        
-                      }}
-                      
-                      onClick={() => deleteData(booking._id)}
-                    >Cancel</Button>
+                      },
+                      color: "white",
+                      backgroundColor: "#00720B",
+                      borderColor: "#006E60",
+                      width: 100,
+                    }}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      goTochatPage(
+                        booking.helper._id,
+                        booking.helper.firstname,
+                        booking.helper.lastname
+                      );
+                    }}
+                  >
+                    {t("ChatBtn")}
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    sx={{
+                      ":hover": {
+                        bgcolor: "#006e5f4a",
+                        borderColor: "#006E60",
+                      },
+                      color: "red",
+                      background: "none",
+                      borderColor: "red",
+                      width: 100,
+                    }}
+                    onClick={() => deleteData(booking._id)}
+                  >
+                    {t("CancelBtn")}
+                  </Button>
                 </div>
               )}
             </div>
           ) : (
             <div className="booking-card" key={index}>
               <div className="booking-name">
-                {`${booking.helper.firstname ?? "No first name"} ${
-                  booking.helper.lastname ?? "No last name"
+                {`${booking.helper.firstname ?? t("errorNoFirstName")} ${
+                  booking.helper.lastname ?? t("errorNoLastName")
                 }`}
               </div>
-              <div className="booking-card-text">Location: </div>
+              <div className="booking-card-text">{t("LocationLabel")}: </div>
               <div className="booking-card-day-time">
-
-                <div>Day: {booking.day}</div>
-                <div>Time: {moment(booking.starttime).utc().format("HH:mm")}</div>
+                <div>
+                  {t("Day")}: {booking.day}
+                </div>
+                <div>
+                  {t("Time")}: {moment(booking.starttime).utc().format("HH:mm")}
+                </div>
               </div>
-              <div className="booking-card-text">Duration: {booking.duration} mins</div>
-              <div className={`booking-card-status-${booking.status}`}><span className={`booking-card-status-dot-${booking.status}`}></span>{booking.status}</div>
-              
+              <div className="booking-card-text">
+                {t("DurationLabel")}: {booking.duration} mins
+              </div>
+              <div className={`booking-card-status-${booking.status}`}>
+                <span
+                  className={`booking-card-status-dot-${booking.status}`}
+                ></span>
+                {booking.status}
+              </div>
             </div>
           )
         )}
       </div>
       <div className="history-buttons">
-              <Button
-                  variant="outlined"
-                  sx={{
-                    ":hover": {
-                      bgcolor: "#006e5f4a",
-                      borderColor: "#006E60",
-                    },
-                    color: "white",
-                    backgroundColor: "#00720B",
-                    borderColor: "#006E60",
-                    ...(!isCurrentBookings ? {
-                      backgroundColor: "#D4FFBC",
-                      color: "#024F09"
-                    } : {color: "white",
-                    backgroundColor: "#00720B",}),
-                  }}
-                  size="large"
-                  onClick={() => setisCurrentBookings(true)}
-                >
-                  Current
-                </Button>
-                <Button
-                  variant="outlined"
-                  sx={{
-                    ":hover": {
-                      bgcolor: "#006e5f4a",
-                      borderColor: "#006E60",
-                    },
-                    backgroundColor: "#00720B",
-                      color: "white",
-                    borderColor: "#006E60",
-                    ...(isCurrentBookings && {
-                      color: "#024F09",
-                    backgroundColor: "#D4FFBC",
-                      
-                    }),
-                  }}
-                  size="large"
-                  onClick={() => setisCurrentBookings(false)}
-                >
-                  History
-                </Button>
-        
-
-        
-        
-      
+        <Button
+          variant="outlined"
+          sx={{
+            ":hover": {
+              bgcolor: "#006e5f4a",
+              borderColor: "#006E60",
+            },
+            color: "white",
+            backgroundColor: "#00720B",
+            borderColor: "#006E60",
+            ...(!isCurrentBookings
+              ? {
+                  backgroundColor: "#D4FFBC",
+                  color: "#024F09",
+                }
+              : { color: "white", backgroundColor: "#00720B" }),
+          }}
+          size="large"
+          onClick={() => setisCurrentBookings(true)}
+        >
+          {t("CurrentBtn")}
+        </Button>
+        <Button
+          variant="outlined"
+          sx={{
+            ":hover": {
+              bgcolor: "#006e5f4a",
+              borderColor: "#006E60",
+            },
+            backgroundColor: "#00720B",
+            color: "white",
+            borderColor: "#006E60",
+            ...(isCurrentBookings && {
+              color: "#024F09",
+              backgroundColor: "#D4FFBC",
+            }),
+          }}
+          size="large"
+          onClick={() => setisCurrentBookings(false)}
+        >
+          {t("HistoryBtn")}
+        </Button>
       </div>
     </div>
   );

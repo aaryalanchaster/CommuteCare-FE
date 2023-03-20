@@ -4,10 +4,16 @@ import IntroImg from "../Assets/loginchoicescreen.jpg";
 import logo from "../Assets/logo.jpg";
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { FormControl, NativeSelect } from '@mui/material';
 
+=======
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
+>>>>>>> c45b339b5bd8b86622d15ab8cb600735f0215788
 const LoginChoicePage = () => {
   const navigate = new useNavigate();
+  const { t } = useTranslation();
   return (
     <div className='choice'>
       <div className='logo'>
@@ -44,7 +50,7 @@ const LoginChoicePage = () => {
                   height: 60,
                 }} onClick={(e)=> {navigate('/login', {state:{data: "Customer"}})}}
             
-            >Get Help</Button>
+          >{t("GetHelpBtn")}</Button>
           </div>
           <div className='choice-button-helper'>
             <Button variant="outlined" fullWidth size='large'
@@ -60,7 +66,7 @@ const LoginChoicePage = () => {
 
               }} onClick={(e)=> {navigate('/login', {state:{data: "Helper"}})}}
             
-            >Help Someone</Button>
+          >{t("HelpSomeoneBtn")}</Button>
           </div>
       </div>
         {/*

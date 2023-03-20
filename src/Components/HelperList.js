@@ -10,11 +10,12 @@ import { displayAvailHelperList, logout } from '../Routes/Login/AuthService';
 
 import ReactLoading from 'react-loading';
 import { Button } from '@mui/material';
-
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
   const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 
   const HelperList = (props) => {
-
+const { t } = useTranslation();
   const [formData, setFormData] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -58,7 +59,7 @@ import { Button } from '@mui/material';
   }
   console.log(user);
 
-  useEffect(() => {
+ useEffect(() => {
 
     const fetchData = async () => {
       try {
@@ -83,6 +84,7 @@ import { Button } from '@mui/material';
     
     
   }, []); 
+
 
   console.log("formData:", formData)
   return (
