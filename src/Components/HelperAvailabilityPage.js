@@ -203,7 +203,7 @@ const HelperAvailabilityPage = () => {
           </div>
           <div className="Week-days">
             <div className="Week-day">
-              <p>{t("WendnesdayLabel")}</p>
+              <p>{t("WednesdayLabel")}</p>
             </div>
             <TimeField
               value={startTimeWed}
@@ -247,7 +247,7 @@ const HelperAvailabilityPage = () => {
           </div>
           <div className="Week-days">
             <div className="Week-day">
-              <p>{t("FridaydayLabel")}</p>
+              <p>{t("FridayLabel")}</p>
             </div>
             <TimeField
               value={startTimeFri}
@@ -291,7 +291,7 @@ const HelperAvailabilityPage = () => {
           </div>
           <div className="Week-days">
             <div className="Week-day">
-              <p>{t("SundayLabel")}</p>
+              <p>{t("SaturdayLabel")}</p>
             </div>
             <TimeField
               value={startTimeSun}

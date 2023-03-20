@@ -64,7 +64,7 @@ export default {
   TuesdayLabel: "Mardi",
   WendnesdayLabel: "Mercredi",
   ThrusdayLabel: "Jeudi",
-  FridaydayLabel: "Vendredi",
+  FridayLabel: "Vendredi",
   SaturdayLabel: "Samedi",
   SundayLabel: "Dimanche",
   NoHelper: "Pas d’aides pour le moment",

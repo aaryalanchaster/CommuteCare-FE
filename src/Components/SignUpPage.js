@@ -12,8 +12,13 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
+<<<<<<< HEAD
+import { FormControl, NativeSelect } from "@mui/material";
+
+=======
 import i18n from "../Translation/i18n";
 import { initReactI18next, useTranslation, Translation } from "react-i18next";
+>>>>>>> c45b339b5bd8b86622d15ab8cb600735f0215788
 const SignUpPage = (props) => {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
@@ -134,6 +139,20 @@ const SignUpPage = (props) => {
     <div className="signUp">
       <div className="logo">
         <img src={logo} alt="logo-img" className="logo-img"></img>
+        <FormControl sx={{width: 100}}>
+                    <NativeSelect
+                    defaultValue={30}
+                    inputProps={{
+                        name: 'age',
+                        id: 'uncontrolled-native',
+                    }}
+                    >
+                    <option value="English">en-US</option>
+                    <option value="French">fr-FR</option>
+                    <option value="German">de-DE</option>
+                    <option value="Spanish">es-ES</option>
+                    </NativeSelect>
+                </FormControl>
       </div>
       <div className="signup-grid">
         <form onSubmit={handleSubmit} className="signup-form">

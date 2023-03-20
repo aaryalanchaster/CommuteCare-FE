@@ -4,8 +4,13 @@ import IntroImg from "../Assets/loginchoicescreen.jpg";
 import logo from "../Assets/logo.jpg";
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
+import { FormControl, NativeSelect } from '@mui/material';
+
+=======
 import i18n from "../Translation/i18n";
 import { initReactI18next, useTranslation, Translation } from "react-i18next";
+>>>>>>> c45b339b5bd8b86622d15ab8cb600735f0215788
 const LoginChoicePage = () => {
   const navigate = new useNavigate();
   const { t } = useTranslation();
@@ -13,6 +18,20 @@ const LoginChoicePage = () => {
     <div className='choice'>
       <div className='logo'>
         <img src={logo} alt='logo-img' className='logo-img'></img>
+        <FormControl sx={{width: 100}}>
+                    <NativeSelect
+                    defaultValue={30}
+                    inputProps={{
+                        name: 'age',
+                        id: 'uncontrolled-native',
+                    }}
+                    >
+                    <option value="English">en-US</option>
+                    <option value="French">fr-FR</option>
+                    <option value="German">de-DE</option>
+                    <option value="Spanish">es-ES</option>
+                    </NativeSelect>
+                </FormControl>
       </div>
       <div className="mask">
             <img className="intro-img" src={IntroImg} alt='heroImg'></img>

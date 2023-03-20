@@ -82,6 +82,9 @@ const Reservation = () => {
     ); // to navigate to the next page along with the retrieved data from DB
   };
 
+  var maxDate = new Date(); //Date
+  maxDate.setDate(maxDate.getDate() + 6);
+
   console.log("Date:", date);
   console.log("Date:", time);
   return (
@@ -97,6 +100,7 @@ const Reservation = () => {
                   label={t("DateofTravel")}
                   onChange={setDate}
                   minDate={new Date()}
+                  maxDate={maxDate}
                   required
                   renderInput={(params) => (
                     <TextField sx={{ width: "100%" }} {...params} />

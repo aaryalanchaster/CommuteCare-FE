@@ -4,6 +4,8 @@ import logo from "../Assets/logo.jpg";
 import homeImg from '../Assets/home-page.jpg';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import { FormControl, NativeSelect } from '@mui/material';
+
 import i18n from "../Translation/i18n";
 import { initReactI18next, useTranslation, Translation } from "react-i18next";
 const HomePage = () => {
@@ -13,7 +15,21 @@ const HomePage = () => {
     <div className="home">
       <div className="eclipse">
         <div className="logo">
-          <img src={logo} alt="logo-img" className="logo-img"></img>
+              <img src={logo} alt="logo-img" className="logo-img"></img>
+                <FormControl sx={{width: 100}}>
+                    <NativeSelect
+                    defaultValue={30}
+                    inputProps={{
+                        name: 'age',
+                        id: 'uncontrolled-native',
+                    }}
+                    >
+                    <option value="English">en</option>
+                    <option value="French">fr</option>
+                    {/* <option value="German">de-DE</option>
+                    <option value="Spanish">es-ES</option> */}
+                    </NativeSelect>
+                </FormControl>
         </div>
         <div className="home-container">
           <div className="home-content">

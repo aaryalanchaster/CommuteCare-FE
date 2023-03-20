@@ -63,7 +63,7 @@ export default {
   TuesdayLabel: "Tuesday",
   WendnesdayLabel: "Wednesday",
   ThrusdayLabel: "Thursday",
-  FridaydayLabel: "Friday",
+  FridayLabel: "Friday",
   SaturdayLabel: "Saturday",
   SundayLabel: "Sunday",
   NoHelper: "No helpers at the moment",
@@ -115,6 +115,7 @@ export default {
 
   showHelpersBtn:"Show Helpers",
   //alert
+UpdateProfile:"User Details updated successfully!!",
 FillColumns:"fill all columns",
   //NAV
   Home: "Home",
@@ -122,5 +123,6 @@ FillColumns:"fill all columns",
   Profile: "Profile",
   Logout: "Logout",
 
-  personaldetails:"Personal Details"
+  personaldetails: "Personal Details"
+  
 };

@@ -465,3 +465,16 @@ export const reportIssue = async (email, title, description) => {
   });
   return response;
 };
+
+
+export const completeBooking = async (bookingId) => {
+  const token = localStorage.getItem("User");
+  const response = axios.post(`${url}/complete-help`,{
+    bookingId: bookingId,
+   } ,{
+    headers: {
+      Authorization: `Bearer ${JSON.parse(token)}`,
+    },
+  });
+  return response;
+};
