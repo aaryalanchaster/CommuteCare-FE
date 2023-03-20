@@ -8,11 +8,8 @@ import {
   logout,
 } from "../Routes/Login/AuthService";
 import "./Chat.css";
-import i18n from "../Translation/i18n";
-import { initReactI18next, useTranslation, Translation } from "react-i18next";
 
 const Chat = (props) => {
-  const { t } = useTranslation();
   const bottomRef = useRef(null);
   const [sendMessage, setsendMessage] = useState({
     sender: "user",
@@ -138,36 +135,40 @@ const Chat = (props) => {
           </div>
         </div>
         <div className="footer">
-          {localStorage.getItem("UserType") === "Customer" && (
-            <Button
-              variant="outlined"
-              sx={{
-                ":hover": {
-                  bgcolor: "#006e5f4a",
-                  borderColor: "#006E60",
-                },
-                color: "red",
-                background: "none",
-                borderColor: "red",
-                width: 100,
-                borderRadius: "50px",
-              }}
-              onClick={(e) => {
-                e.preventDefault();
-                navigate("/report");
-              }}
-            >
-              {t("Report")}
-            </Button>
-          )}
-
+          {localStorage.getItem("UserType") === "Customer" && 
+          
+          <Button
+                      variant="outlined"
+                      sx={{
+                        ":hover": {
+                          bgcolor: "#006e5f4a",
+                          borderColor: "#006E60",
+                        },
+                        color: "red",
+                        background: "none",
+                        borderColor: "red",
+                        width: 100,
+                        borderRadius: "50px",
+                        
+                      }}
+                      
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate('/report');
+                      }}
+                    >Report</Button>
+            }
+                  
+          
           <TextField
-            placeholder={t("TypePH")}
+            placeholder="Type Here.."
             multiline
+            
             sx={{
               width: 300,
               backgroundColor: "#D9D9D9",
               width: 700,
+              
             }}
             value={sendMessage.message}
             onChange={(e) =>
@@ -175,27 +176,27 @@ const Chat = (props) => {
             }
           />
 
-          <Button
-            variant="outlined"
-            sx={{
-              ":hover": {
-                bgcolor: "#006e5f4a",
-                borderColor: "#006E60",
-              },
-              color: "white",
-              backgroundColor: "#00720B",
-              borderColor: "#006E60",
-              width: 150,
-              borderRadius: "50px",
-            }}
-            onClick={() =>
-              localStorage.getItem("UserType") === "Customer"
-                ? handleChatSendUser()
-                : handleChatSendHelper()
-            }
-          >
-            {t("SendBtn")}
-          </Button>
+                  <Button
+                      variant="outlined"
+                      sx={{
+                        ":hover": {
+                          bgcolor: "#006e5f4a",
+                          borderColor: "#006E60",
+                        },
+                        color: "white",
+                        backgroundColor: "#00720B",
+                        borderColor: "#006E60",
+                        width: 150,
+                        borderRadius: "50px",
+                      }}
+                      
+                      onClick={() =>
+                        localStorage.getItem("UserType") === "Customer"
+                          ? handleChatSendUser()
+                          : handleChatSendHelper()
+                      }
+                    >Send</Button>
+          
         </div>
       </div>
     </div>

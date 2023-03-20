@@ -7,18 +7,15 @@ import TimeField from "react-simple-timefield";
 
 import { editAvailability, getAvailability, logout } from "../Routes/Login/AuthService";
 import { Button } from "@mui/material";
-
-import i18n from "../Translation/i18n";
-import { initReactI18next, useTranslation, Translation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const HelperAvailabilityPage = () => {
-  const { t } = useTranslation();
   const [date, setDate] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
 
   const [errorStartTime, setErrorStartTime] = useState(null);
   const [errorEndTime, setErrorEndTime] = useState(null);
-  const errortxt = t("errorInvalidTime");
+  const errortxt = "Invalid Time";
 
   const [startTimeMon, setStartTimeMon] = useState("");
   const [endTimeMon, setEndTimeMon] = useState("");
@@ -159,7 +156,7 @@ const HelperAvailabilityPage = () => {
         <div className="availability-container">
           <div className="Week-days">
             <div className="Week-day">
-              <p>{t("MondayLabel")}</p>
+              <p>Monday</p>
             </div>
             <TimeField
               value={startTimeMon}
@@ -169,7 +166,7 @@ const HelperAvailabilityPage = () => {
               input={<input className="time-input" />}
               colon=":"
             />
-            <p>{t("To")}</p>
+            <p>to</p>
             <TimeField
               value={endTimeMon}
               onChange={(e) => {
@@ -181,7 +178,7 @@ const HelperAvailabilityPage = () => {
           </div>
           <div className="Week-days">
             <div className="Week-day">
-              <p>{t("TuesdayLabel")}</p>
+              <p>Tuesday</p>
             </div>
             <TimeField
               value={startTimeTue}
@@ -191,7 +188,7 @@ const HelperAvailabilityPage = () => {
               input={<input className="time-input" />}
               colon=":"
             />
-            <p>{t("To")}</p>
+            <p>to</p>
             <TimeField
               value={endTimeTue}
               onChange={(e) => {
@@ -203,7 +200,7 @@ const HelperAvailabilityPage = () => {
           </div>
           <div className="Week-days">
             <div className="Week-day">
-              <p>{t("WendnesdayLabel")}</p>
+              <p>Wednesday</p>
             </div>
             <TimeField
               value={startTimeWed}
@@ -213,7 +210,7 @@ const HelperAvailabilityPage = () => {
               input={<input className="time-input" />}
               colon=":"
             />
-            <p>{t("To")}</p>
+            <p>to</p>
             <TimeField
               value={endTimeWed}
               onChange={(e) => {
@@ -225,7 +222,7 @@ const HelperAvailabilityPage = () => {
           </div>
           <div className="Week-days">
             <div className="Week-day">
-              <p>{t("ThrusdayLabel")}</p>
+              <p>Thursday</p>
             </div>
             <TimeField
               value={startTimeThu}
@@ -235,7 +232,7 @@ const HelperAvailabilityPage = () => {
               input={<input className="time-input" />}
               colon=":"
             />
-            <p>{t("To")}</p>
+            <p>to</p>
             <TimeField
               value={endTimeThu}
               onChange={(e) => {
@@ -247,7 +244,7 @@ const HelperAvailabilityPage = () => {
           </div>
           <div className="Week-days">
             <div className="Week-day">
-              <p>{t("FridaydayLabel")}</p>
+              <p>Friday</p>
             </div>
             <TimeField
               value={startTimeFri}
@@ -257,7 +254,7 @@ const HelperAvailabilityPage = () => {
               input={<input className="time-input" />}
               colon=":"
             />
-            <p>{t("To")}</p>
+            <p>to</p>
             <TimeField
               value={endTimeFri}
               onChange={(e) => {
@@ -269,7 +266,7 @@ const HelperAvailabilityPage = () => {
           </div>
           <div className="Week-days">
             <div className="Week-day">
-              <p>{t("SaturdayLabel")}</p>
+              <p>Saturday</p>
             </div>
             <TimeField
               value={startTimeSat}
@@ -279,7 +276,7 @@ const HelperAvailabilityPage = () => {
               input={<input className="time-input" />}
               colon=":"
             />
-            <p>{t("To")}</p>
+            <p>to</p>
             <TimeField
               value={endTimeSat}
               onChange={(e) => {
@@ -291,7 +288,7 @@ const HelperAvailabilityPage = () => {
           </div>
           <div className="Week-days">
             <div className="Week-day">
-              <p>{t("SundayLabel")}</p>
+              <p>Sunday</p>
             </div>
             <TimeField
               value={startTimeSun}
@@ -301,7 +298,7 @@ const HelperAvailabilityPage = () => {
               input={<input className="time-input" />}
               colon=":"
             />
-            <p>{t("To")}</p>
+            <p>to</p>
             <TimeField
               value={endTimeSun}
               onChange={(e) => {
@@ -330,9 +327,10 @@ const HelperAvailabilityPage = () => {
           size="large"
           onClick={handleSubmit}
         >
-          {t("SaveBtn")}
+          Save
         </Button>
       </div>
+      
     </div>
   );
 };

@@ -9,6 +9,8 @@
   height: 150px;
   padding-left: 5% ;
   align-items: center;
+  justify-content: space-between;
+  padding-right: 5%;
 }
 
 .logo-img{

@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { passwordChange, passwordChangeHelper } from '../Routes/Login/AuthService';
 import './newPassword.css';
 import logo from "../Assets/logo.jpg";
-import { Button, IconButton, InputAdornment, TextField } from '@mui/material';
+import { Button, FormControl, IconButton, InputAdornment, NativeSelect, TextField } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 // import './Password-icons.css';
 
@@ -104,6 +104,20 @@ const NewPassword = () => {
     <div className='new-password-page'>
       <div className='logo'>
           <img src={logo} alt='logo-img' className='logo-img'></img>
+          <FormControl sx={{width: 100}}>
+                    <NativeSelect
+                    defaultValue={30}
+                    inputProps={{
+                        name: 'age',
+                        id: 'uncontrolled-native',
+                    }}
+                    >
+                    <option value="English">en-US</option>
+                    <option value="French">fr-FR</option>
+                    <option value="German">de-DE</option>
+                    <option value="Spanish">es-ES</option>
+                    </NativeSelect>
+                </FormControl>
       </div>
     <div className='newPassword'>
         <form onSubmit={handleSubmit} className='signup-form'>
