@@ -117,6 +117,7 @@ export default {
   showHelpersBtn: "Afficher les aides",
   //alert
   FillColumns: "Remplir toutes les colonnes",
+  UpdateProfile: " Les détails de l’utilisateur ont été mis à jour avec succès !! ",
   //NAV
   Home: "Domicile",
   Booking: "Réservation",

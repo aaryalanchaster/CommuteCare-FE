@@ -110,10 +110,8 @@ const LoginPage = (props) => {
                         id: 'uncontrolled-native',
                     }}
                     >
-                    <option value="English">en-US</option>
-                    <option value="French">fr-FR</option>
-                    <option value="German">de-DE</option>
-                    <option value="Spanish">es-ES</option>
+                    <option value="en">en</option>
+                    <option value="fr">fr</option>
                     </NativeSelect>
                 </FormControl>
       </div>

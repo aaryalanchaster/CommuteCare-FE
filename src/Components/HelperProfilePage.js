@@ -11,9 +11,10 @@ import { AccountCircle, LocalPhone, Mail, PhoneAndroid } from '@mui/icons-materi
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
-
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
 const HelperProfilePage = () => {
-
+ const { t } = useTranslation();
     const [email, setemail] = useState("");
 
     const [isLoading, setisLoading] = useState(false);
@@ -45,7 +46,7 @@ const HelperProfilePage = () => {
     const handleFirstNameChange = (firstName) => {
       const regex = /^[A-Za-z\s]*$/;
       if (!regex.test(firstName)) {
-        setfnameError('Enter only alphabets');
+        setfnameError(t("errorAlphabets"));
         setfnameErrorFlag(true);
         return true;
       }
@@ -59,7 +60,7 @@ const HelperProfilePage = () => {
     const handleLastNameChange = (lastName) => {
       const regex = /^[A-Za-z\s]*$/;
       if (!regex.test(lastName)) {
-        setlnameError('Enter only alphabets');
+        setlnameError(t("errorAlphabets"));
         setlnameErrorFlag(true);
         return true;
       }
@@ -72,7 +73,7 @@ const HelperProfilePage = () => {
   
     const handleDobChange = (dob) => {
       if(!dob){
-        setdobError("Enter DOB");
+        setdobError(t("errorDOB"));
         setdobErrorFlag(true);
         return true;
       }
@@ -111,7 +112,7 @@ const HelperProfilePage = () => {
     const handlePhoneChange = (event) => {
       const regex = /^\d{10}$/;
       if (!regex.test(phone)) {
-        setPhoneError('Number Invalid');
+        setPhoneError(t("errorPhoneNumber"));
         setPhoneErrorFlag(true);
         return true;
       }
@@ -126,7 +127,7 @@ const HelperProfilePage = () => {
   
     const handleBioChange = (bio) => {
       if(!bio){
-        setbioError('Enter your bio here');
+        setbioError(t("errorBio"));
         setbioErrorFlag(true);
         return true;
       }
@@ -144,19 +145,19 @@ const HelperProfilePage = () => {
           || handleGenderChange(gender) || handleBioChange(bio) || handleNationalityChange(nationality)
       ){
         if(firstName.length === 0){
-          setfnameError('Enter First Name');
+          setfnameError(t("errorFirstName"));
           setfnameErrorFlag(true);
         }
         if(lastName.length === 0){
-          setlnameError('Enter Last Name');
+          setlnameError(t("errorLastName"));
           setlnameErrorFlag(true);
         }
         if(phone.length === 0){
-          setPhoneError('Enter Phone Number');
+          setPhoneError(t("errorPhoneNumber"));
           setPhoneErrorFlag(true);
         }
         if(!dob){
-          setdobError("Enter DOB");
+          setdobError(t("errorDOB"));
           setdobErrorFlag(true);
         }
         if(!gender){
@@ -167,7 +168,7 @@ const HelperProfilePage = () => {
           setnationalityErrorFlag(true);
         }
         if(!bio){
-          setbioError('Enter your bio here');
+          setbioError(t("errorBio"));
           setbioErrorFlag(true);
         }
         return false;
@@ -175,7 +176,7 @@ const HelperProfilePage = () => {
       const date = (dob.$M +1)+"/"+dob.$D+"/"+dob.$y;
       try {
         await additionalDetailsHelper(firstName, lastName, gender, date, phone, bio, nationality);
-        alert("User Details updated successfully!!")
+        alert(t("UpdateProfile"));
       } catch (error) {
         console.error('error', error);
         if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
@@ -223,201 +224,220 @@ const HelperProfilePage = () => {
     
     
   return (
-    <div className='profile'>
-        {
-            isLoading ? <div>Loading.....</div> : <>
-                    <div className='profile-container'>
-                    <h2>Personal Details</h2>
-                    <div className='profile-div'> 
-                        <div className='profile-content'>
+    <div className="profile">
+      {isLoading ? (
+        <div>Loading.....</div>
+      ) : (
+        <>
+          <div className="profile-container">
+            <h2>{t("personaldetails")}</h2>
+            <div className="profile-div">
+              <div className="profile-content">
+                <TextField
+                  error={fnameErrorFlag}
+                  helperText={fnameError}
+                  label={t("FirstNameLabel")}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    ),
+                    pattern: "[A-Za-z ]+",
+                  }}
+                  variant="standard"
+                  sx={{
+                    width: "70%",
+                    marginTop: "2%",
+                  }}
+                  value={firstName}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                  }}
+                />
+                <TextField
+                  error={lnameErrorFlag}
+                  helperText={lnameError}
+                  label={t("LastNameLabel")}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <AccountCircle />
+                      </InputAdornment>
+                    ),
+                    pattern: "[A-Za-z ]+",
+                  }}
+                  variant="standard"
+                  sx={{
+                    width: "70%",
+                    marginTop: "5%",
+                  }}
+                  value={lastName}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                  }}
+                />
+                <TextField
+                  label={t("EmailLabel")}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <Mail />
+                      </InputAdornment>
+                    ),
+                    readOnly: true,
+                  }}
+                  variant="standard"
+                  sx={{
+                    width: "70%",
+                    marginTop: "5%",
+                  }}
+                  value={email}
+                />
+
+                <FormControl
+                  variant="standard"
+                  sx={{ width: "70%", marginTop: "5%", textAlign: "left" }}
+                  error={genderErrorFlag}
+                >
+                  <InputLabel id="gender">{t("GenderLabel")}</InputLabel>
+                  <Select
+                    labelId="gender"
+                    id="gender"
+                    value={gender}
+                    label={t("GenderLabel")}
+                    onChange={(e) => {
+                      setGender(e.target.value);
+                    }}
+                    required
+                  >
+                    <MenuItem value="Male">{t("MaleGender")}</MenuItem>
+                    <MenuItem value="Female">{t("FemaleGender")}</MenuItem>
+                    <MenuItem value="Others">{t("OtherGender")}</MenuItem>
+                    <MenuItem value="Prefer not to say">
+                      {t("PreferNSGender")}
+                    </MenuItem>
+                  </Select>
+                  <FormHelperText>
+                    {genderErrorFlag ? "Enter gender" : ""}
+                  </FormHelperText>
+                </FormControl>
+
+                <TextField
+                  error={phoneErrorFlag}
+                  helperText={phoneError}
+                  label={t("PhoneNumberLabel")}
+                  InputProps={{
+                    startAdornment: (
+                      <InputAdornment position="start">
+                        <LocalPhone />
+                      </InputAdornment>
+                    ),
+                  }}
+                  inputProps={{ pattern: "[0-9]{10}", maxLength: 10 }}
+                  variant="standard"
+                  sx={{
+                    width: "70%",
+                    marginTop: "5%",
+                  }}
+                  value={phone}
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                  }}
+                />
+                <div className="profile-dob">
+                  <LocalizationProvider dateAdapter={AdapterDayjs} fullwidth>
+                    <DatePicker
+                      variant="standard"
+                      value={dob}
+                      sx={{ width: "70%", marginTop: "5%" }}
+                      label={t("DateofBirthLabel")}
+                      onChange={(newValue) => {
+                        setDob(newValue);
+                      }}
+                      maxDate={new Date()}
+                      required
+                      renderInput={(params) => (
                         <TextField
-                             error = {fnameErrorFlag}
-                             helperText={fnameError}
-                             
-                              label="First Name"
-                              InputProps={{
-                                startAdornment: (
-                                  <InputAdornment position="start">
-                                    <AccountCircle />
-                                  </InputAdornment>
-                                ),pattern: '[A-Za-z ]+',
-                              }}
-                              variant="standard"
-                              sx={{
-                                width: "70%",
-                                marginTop: "2%",
-                              }}
-                              value={firstName}
-                              onChange={(e) => {
-                                setFirstName(e.target.value);}}
-                            />
-                            <TextField
-                             error = {lnameErrorFlag}
-                             helperText={lnameError}
+                          sx={{ width: "100%" }}
+                          {...params}
+                          error={dobErrorFlag}
+                          helperText={dobError}
+                        />
+                      )}
+                    />
+                  </LocalizationProvider>
+                </div>
+                <TextField
+                  id="bio"
+                  value={bio}
+                  onChange={(e) => {
+                    setbio(e.target.value);
+                  }}
+                  placeholder={("BioPH")}
+                  multiline
+                  rows={3}
+                  maxRows={4}
+                  sx={{
+                    width: "70%",
+                    marginTop: "5%",
+                  }}
+                  inputProps={{ maxLength: 150 }}
+                  label={t("AboutMeLabel")}
+                />
+                <FormControl
+                  variant="standard"
+                  fullWidth
+                  sx={{ width: "70%", marginTop: "5%", textAlign: "left" }}
+                  error={nationalityErrorFlag}
+                >
+                  <InputLabel id="nationality">Nationality</InputLabel>
+                  <Select
+                    labelId="nationality"
+                    id="nationality"
+                    value={nationality}
+                    label={t("NationalityLabel")}
+                    onChange={(e) => {
+                      setNationality(e.target.value);
+                    }}
+                    required
+                  >
+                    {nationalityPlaces.map((option, index) => (
+                      <MenuItem key={index} value={option.value}>
+                        {option.text}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                  <FormHelperText>
+                    {nationalityErrorFlag ? "Enter nationality" : ""}
+                  </FormHelperText>
+                </FormControl>
 
-                              label="Last Name"
-                              InputProps={{
-                                startAdornment: (
-                                  <InputAdornment position="start">
-                                    <AccountCircle />
-                                  </InputAdornment>
-                                ),pattern: '[A-Za-z ]+',
-                              }}
-                              variant="standard"
-                              sx={{
-                                width: "70%",
-                                marginTop: "5%",
-                              }}
-                              value={lastName}
-                              onChange={(e) => {
-                                setLastName(e.target.value);}}
-                            />
-                            <TextField
-                              
-                              label="Email"
-                              InputProps={{
-                                startAdornment: (
-                                  <InputAdornment position="start">
-                                   <Mail  />
-                                  </InputAdornment>
-                                ),
-                                readOnly: true,
-                              }}
-                              variant="standard"
-                              sx={{
-                                width: "70%",
-                                marginTop: "5%",
-                              }}
-                              value={email}
-                              
-                            />
-
-                            <FormControl variant="standard" sx={{width: "70%", marginTop: "5%", textAlign: 'left'}} error={genderErrorFlag}>
-                              <InputLabel id="gender">Gender</InputLabel>
-                              <Select
-                                labelId="gender"
-                                id="gender"
-                                value={gender}
-                                label="gender"
-                                onChange={(e) => {
-                                  setGender(e.target.value);}}
-                                required
-                              
-                              >
-                                <MenuItem value="Male">Male</MenuItem>
-                                <MenuItem value="Female">Female</MenuItem>
-                                <MenuItem value="Others">Others</MenuItem>
-                                <MenuItem value="Prefer not to say">Prefer not to say</MenuItem>
-                              </Select>
-                              <FormHelperText>{genderErrorFlag? "Enter gender": ""}</FormHelperText>
-                            </FormControl>
-
-                            <TextField
-                              error = {phoneErrorFlag}
-                              helperText={phoneError}
-                              label="Phone"
-                              InputProps={{
-                                startAdornment: (
-                                  <InputAdornment position="start">
-                                    <LocalPhone />
-                                  </InputAdornment>
-                                ),
-                              }}
-                              inputProps={{pattern: '[0-9]{10}', maxLength: 10 ,}}
-                              variant="standard"
-                              sx={{
-                                width: "70%",
-                                marginTop: "5%",
-                              }}
-                              value={phone}
-                              onChange={(e) => {
-                                setPhone(e.target.value);}}
-                              
-                            />
-                            <div className="profile-dob">
-                                <LocalizationProvider dateAdapter={AdapterDayjs} fullwidth>
-                                  <DatePicker
-                                    variant="standard"
-                                    value={dob}
-                                    sx={{width: "70%", marginTop: "5%",}}
-                                    label="Date of Birth"
-                                    onChange={(newValue) => {
-                                      setDob(newValue);
-                                    }}
-                                    maxDate={new Date()}
-                                    required
-                                    renderInput={(params) => (
-                                      <TextField
-                                        sx={{ width: '100%' }}
-                                        {...params}
-                                        error={dobErrorFlag}
-                                        helperText={dobError}
-                                      />
-                                    )}
-                                  />
-                                </LocalizationProvider>
-                            </div>
-                            <TextField
-                              id="bio"
-                              value={bio}
-                              onChange={(e) => {
-                                setbio(e.target.value);}}
-                              placeholder="Enter your bio here (150 wordlimit)"
-                              multiline
-                              rows={3}
-                              maxRows={4}
-                              sx={{
-                                width: "70%", marginTop: "5%",
-                              }}
-                              inputProps={{ maxLength: 150, }}
-                              label='About me'
-                          />
-                            <FormControl variant="standard" fullWidth sx={{width: "70%", marginTop: "5%" , textAlign: 'left'}} error={nationalityErrorFlag}>
-                                <InputLabel id="nationality">Nationality</InputLabel>
-                                <Select
-                                  labelId="nationality"
-                                  id="nationality"
-                                  value={nationality}
-                                  label="nationality"
-                                  onChange={(e) => {
-                                    setNationality(e.target.value);}}
-                                  required
-                                  
-                                >
-                                  {nationalityPlaces.map((option,index) =>(
-                                    <MenuItem key={index} value={option.value}>
-                                        {option.text}
-                                      </MenuItem>
-                                  ))}
-                                  
-                                </Select>
-                                <FormHelperText>{nationalityErrorFlag? "Enter nationality": ""}</FormHelperText>
-                              </FormControl>
-
-                              <Button variant='outlined' sx={{
-                                  ":hover": {
-                                  bgcolor: "#006e5f4a",
-                                  borderColor: "#006E60",
-                                  },
-                                  color: "white",
-                                  backgroundColor: "#00720B",
-                                  borderColor: "#006E60",
-                                  width: 150,
-                                  marginTop: "10%",
-                                  
-                                }} size="large"  onClick={handleSubmit}>
-                                  Save
-                              </Button>
-                            
-                        </div>
-                    </div>
-               
-                    </div>
-            </>
-        }
-        
+                <Button
+                  variant="outlined"
+                  sx={{
+                    ":hover": {
+                      bgcolor: "#006e5f4a",
+                      borderColor: "#006E60",
+                    },
+                    color: "white",
+                    backgroundColor: "#00720B",
+                    borderColor: "#006E60",
+                    width: 150,
+                    marginTop: "10%",
+                  }}
+                  size="large"
+                  onClick={handleSubmit}
+                >
+                  {t("SaveBtn")}
+                </Button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
     </div>
-  )
+  );
 }
 
 export default HelperProfilePage
