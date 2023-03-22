@@ -49,7 +49,6 @@ const Review = () => {
     };
 
   return (
-<<<<<<< HEAD
     <div className='review'>
         <div className='logo'>
           <img src={logo} alt='logo-img' className='logo-img'></img>
@@ -67,11 +66,6 @@ const Review = () => {
                     <option value="Spanish">es-ES</option>
                     </NativeSelect>
                 </FormControl>
-=======
-    <div className="review">
-      <div className="logo">
-        <img src={logo} alt="logo-img" className="logo-img"></img>
->>>>>>> c45b339b5bd8b86622d15ab8cb600735f0215788
       </div>
       <div className="review-container">
         <div className="review-contents">

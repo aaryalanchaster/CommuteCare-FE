@@ -103,7 +103,6 @@ const NewPassword = () => {
 
   };
   return (
-<<<<<<< HEAD
     <div className='new-password-page'>
       <div className='logo'>
           <img src={logo} alt='logo-img' className='logo-img'></img>
@@ -121,11 +120,6 @@ const NewPassword = () => {
                     <option value="Spanish">es-ES</option>
                     </NativeSelect>
                 </FormControl>
-=======
-    <div className="new-password-page">
-      <div className="logo">
-        <img src={logo} alt="logo-img" className="logo-img"></img>
->>>>>>> c45b339b5bd8b86622d15ab8cb600735f0215788
       </div>
       <div className="newPassword">
         <form onSubmit={handleSubmit} className="signup-form">

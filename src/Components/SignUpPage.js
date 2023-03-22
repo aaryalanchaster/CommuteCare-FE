@@ -12,13 +12,13 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
-<<<<<<< HEAD
+
 import { FormControl, NativeSelect } from "@mui/material";
 
-=======
+
 import i18n from "../Translation/i18n";
 import { initReactI18next, useTranslation, Translation } from "react-i18next";
->>>>>>> c45b339b5bd8b86622d15ab8cb600735f0215788
+
 const SignUpPage = (props) => {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
