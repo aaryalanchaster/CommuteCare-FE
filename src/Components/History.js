@@ -86,16 +86,16 @@ const History = () => {
                 }`}
               </div>
               <div className="booking-card-text">
-                t("LocationLabel"):{booking.location}
+                {t("LocationLabel")}:{booking.location}
               </div>
               <div className="booking-card-day-time">
-                <div>t("Day"): {booking.day}</div>
+                <div>{t("Day")}: {booking.day}</div>
                 <div>
-                  t("Time"): {moment(booking.starttime).utc().format("HH:mm")}
+                 { t("Time")}: {moment(booking.starttime).utc().format("HH:mm")}
                 </div>
               </div>
               <div className="booking-card-text">
-                t("DurationLabel"): {booking.duration} mins
+                {t("DurationLabel")}: {booking.duration} mins
               </div>
               {booking.status === "pending" ? (
                 <div className={`booking-card-status-${booking.status}`}>

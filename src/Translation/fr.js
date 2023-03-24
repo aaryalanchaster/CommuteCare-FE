@@ -62,7 +62,7 @@ export default {
   PasswordLink: "Le lien de réinitialisation du mot de passe a été envoyé à",
   MondayLabel: "Lundi",
   TuesdayLabel: "Mardi",
-  WendnesdayLabel: "Mercredi",
+  WednesdayLabel: "Mercredi",
   ThrusdayLabel: "Jeudi",
   FridayLabel: "Vendredi",
   SaturdayLabel: "Samedi",
@@ -114,10 +114,12 @@ export default {
   GetHelpBtn: "Obtenir de l’aide",
   HelpSomeoneBtn: "Aidez quelqu’un",
   LoginBtn: "Connectez-vous",
+  CompleteBtn: "Complète",
   showHelpersBtn: "Afficher les aides",
   //alert
   FillColumns: "Remplir toutes les colonnes",
-  UpdateProfile: " Les détails de l’utilisateur ont été mis à jour avec succès !! ",
+  UpdateProfile:
+    " Les détails de l’utilisateur ont été mis à jour avec succès !! ",
   //NAV
   Home: "Domicile",
   Booking: "Réservation",

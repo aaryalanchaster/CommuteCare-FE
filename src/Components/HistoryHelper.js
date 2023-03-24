@@ -13,10 +13,12 @@ import {
   rejectBooking,
 } from "../Routes/Login/AuthService";
 import "./History.css";
-
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
 import ReactLoading from "react-loading";
 
 const HistoryHelper = () => {
+   const { t } = useTranslation();
   const [bookings, setbookings] = useState([]);
   const [isPendingBookings, setisPendingBookings] = useState(true);
   const [isrefresh, setisrefresh] = useState(false);
@@ -150,25 +152,32 @@ const HistoryHelper = () => {
               isPendingBookings ? (
                 <div className="booking-card" key={index}>
                   <div className="booking-name">
-                    {`${booking.user.firstname ?? "No first name"} ${
-                      booking.user.lastname ?? "No last name"
+                    {`${booking.user.firstname ?? t("errorNoFirstName")} ${
+                      booking.user.lastname ?? t("errorNoLastName")
                     }`}
                   </div>
                   <div className="booking-card-text">
-                    Location: {booking.location}
+                    {t("LocationLabel")}: {booking.location}
                   </div>
                   <div className="booking-card-day-time">
-                    <div>Day: {booking.day}</div>
                     <div>
-                      Time: {moment(booking.starttime).utc().format("HH:mm")}
+                      {t("Day")}: {booking.day}
+                    </div>
+                    <div>
+                      {t("Time")}:
+                      {moment(booking.starttime).utc().format("HH:mm")}
                     </div>
                   </div>
                   <div className="booking-card-day-time">
-                    <div>Date: {booking.date}</div>
-                    <div>Duration: {booking.duration} mins</div>
+                    <div>
+                      {t("Date")}: {booking.date}
+                    </div>
+                    <div>
+                      {t("DurationLabel")}: {booking.duration} mins
+                    </div>
                   </div>
                   <div className="booking-card-text">
-                    Description: {booking.description}
+                    {t("Description")}: {booking.description}
                   </div>
 
                   <div className="card-buttons">
@@ -186,7 +195,7 @@ const HistoryHelper = () => {
                       }}
                       onClick={() => handleAccept(booking._id)}
                     >
-                      Accept
+                      {t("AcceptBtn")}
                     </Button>
                     <Button
                       variant="outlined"
@@ -202,29 +211,36 @@ const HistoryHelper = () => {
                       }}
                       onClick={() => handleReject(booking._id)}
                     >
-                      Reject
+                      {t("RejectBtn")}
                     </Button>
                   </div>
                 </div>
               ) : (
                 <div className="booking-card" key={index}>
                   <div className="booking-name">
-                    {`${booking.user.firstname ?? "No first name"} ${
-                      booking.user.lastname ?? "No last name"
+                    {`${booking.user.firstname ?? t("errorNoFirstName")} ${
+                      booking.user.lastname ?? t("errorNoLastName")
                     }`}
                   </div>
                   <div className="booking-card-text">
-                    Location: {booking.location}
+                    {t("LocationLabel")}: {booking.location}
                   </div>
                   <div className="booking-card-day-time">
-                    <div>Day: {booking.day}</div>
                     <div>
-                      Time: {moment(booking.starttime).utc().format("HH:mm")}
+                      {t("Day")}: {booking.day}
+                    </div>
+                    <div>
+                      {t("Time")}:{" "}
+                      {moment(booking.starttime).utc().format("HH:mm")}
                     </div>
                   </div>
                   <div className="booking-card-day-time">
-                    <div>Date: {booking.date}</div>
-                    <div>Duration: {booking.duration} mins</div>
+                    <div>
+                      {t("Date")}: {booking.date}
+                    </div>
+                    <div>
+                      {t("Duration")}: {booking.duration} mins
+                    </div>
                   </div>
                   <div className="card-buttons">
                     <Button
@@ -253,7 +269,7 @@ const HistoryHelper = () => {
                         // navigate('/chat',{state:{Id}});
                       }}
                     >
-                      chat
+                      {t("ChatBtn")}
                     </Button>
 
                     <Button
@@ -273,7 +289,7 @@ const HistoryHelper = () => {
                         completeBookingFn(booking._id);
                       }}
                     >
-                      Complete
+                      {t("CompleteBtn")}
                     </Button>
                   </div>
                 </div>
@@ -303,7 +319,7 @@ const HistoryHelper = () => {
                 setisPendingBookings(true);
               }}
             >
-              Pending
+              {t("PendingBtn")}
             </Button>
             <Button
               variant="outlined"
@@ -325,7 +341,7 @@ const HistoryHelper = () => {
                 setisPendingBookings(false);
               }}
             >
-              Confirmed
+              {t("ConfirmedBtn")}
             </Button>
           </div>
         </>

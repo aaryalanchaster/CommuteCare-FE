@@ -8,6 +8,7 @@ import {
   logout,
 } from "../Routes/Login/AuthService";
 import "./Chat.css";
+import { socket } from "../Assets/socket";
 
 const Chat = (props) => {
   const bottomRef = useRef(null);
@@ -69,6 +70,11 @@ const Chat = (props) => {
         props.data,
         sendMessage.message
       ).then((response) => {
+        // emit message to user after adding to messageList
+        socket.to(localStorage.getItem("UserID")).emit("userMessage", {
+          userId: localStorage.getItem("UserID"),
+          message: sendMessage.message,
+        });
         setmessageList([...messageList, sendMessage]);
         setsendMessage({ ...sendMessage, message: "" });
       });
@@ -88,6 +94,11 @@ const Chat = (props) => {
         localStorage.getItem("HelperID"),
         sendMessage.message
       ).then((response) => {
+        // emit message to user after adding to messageList
+        socket.to(localStorage.getItem("HelperID")).emit("helperMessage", {
+          userId: localStorage.getItem("HelperID"),
+          message: sendMessage.message,
+        });
         setmessageList([...messageList, sendMessage]);
         setsendMessage({ ...sendMessage, message: "" });
       });
@@ -156,7 +167,7 @@ const Chat = (props) => {
                         e.preventDefault();
                         navigate('/report');
                       }}
-                    >Report</Button>
+            >{t("ReportBtn")}</Button>
             }
                   
           
@@ -195,7 +206,7 @@ const Chat = (props) => {
                           ? handleChatSendUser()
                           : handleChatSendHelper()
                       }
-                    >Send</Button>
+          >{t("SendBtn")}</Button>
           
         </div>
       </div>

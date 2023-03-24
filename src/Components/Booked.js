@@ -11,6 +11,8 @@ import { useNavigate } from 'react-router-dom';
 import bookImg from "../Assets/booked.jpg";
 import { Button } from '@mui/material';
 
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
 
 const Booked = (props) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -22,6 +24,7 @@ const Booked = (props) => {
   const [jwtError, setjwtError] = useState("");
 
   //console.log(props.PersonId, props.Day,props.Time, props.Duration);
+const { t } = useTranslation();
 
 
   useEffect(() => {
@@ -59,59 +62,68 @@ const Booked = (props) => {
 
    
   return (
-    
-    <div className='booked'>
-      { isLoading? <>
-        <div className='loading'><ReactLoading type="spin" color="#000" />
-        
-        </div>
-      </> :
-      <div className='booked-container'>
-        <div className='booked-container-left'> 
+    <div className="booked">
+      {isLoading ? (
+        <>
+          <div className="loading">
+            <ReactLoading type="spin" color="#000" />
+          </div>
+        </>
+      ) : (
+        <div className="booked-container">
+          <div className="booked-container-left">
+            {error ? (
+              <span>Error: {error}</span>
+            ) : (
+              <>
+                {result === t("errorHelperAlreadyBooked") ||
+                result === "Booking declined" ? (
+                  <>{result}</>
+                ) : (
+                  <div className="booked-content">
+                    <h1>{t("BookingSent")}</h1>
 
-        {error ? <span>Error: {error}</span> : <>
-          {result === 'You have already booked a helper in this time slot' || result === 'Booking declined' ? <>{result}</>:
-          <div className='booked-content'>
-            <h1>Your booking has been sent to the helper !</h1>
-            
-            <p>Helper Name:&nbsp;&nbsp;&nbsp;{props.PersonName} </p>
-            <p>Day: &nbsp;&nbsp;&nbsp;{props.Day}</p>
-            <p>Date: &nbsp;&nbsp;&nbsp; {props.Date}</p>
-            <div className='booked-buttons'>
-            <Button
-                      variant="outlined"
-                      sx={{
-                        ":hover": {
-                          bgcolor: "#006e5f4a",
+                    <p>
+                      {t("HelperName")}:&nbsp;&nbsp;&nbsp;{props.PersonName}{" "}
+                    </p>
+                    <p>
+                      {t("Day")}: &nbsp;&nbsp;&nbsp;{props.Day}
+                    </p>
+                    <p>
+                      {t("Date")}: &nbsp;&nbsp;&nbsp; {props.Date}
+                    </p>
+                    <div className="booked-buttons">
+                      <Button
+                        variant="outlined"
+                        sx={{
+                          ":hover": {
+                            bgcolor: "#006e5f4a",
+                            borderColor: "#006E60",
+                          },
+                          color: "white",
+                          backgroundColor: "#00720B",
                           borderColor: "#006E60",
-                        },
-                        color: "white",
-                        backgroundColor: "#00720B",
-                        borderColor: "#006E60",
-                        width: 100,
-                      }}
-                      
-                      onClick={(e) => {
-                        navigate('/');
-                      }}
-
-                    >Home</Button>
-                    
-            </div>
-          </div>}
-        
-        </>} 
-        
+                          width: 100,
+                        }}
+                        onClick={(e) => {
+                          navigate("/");
+                        }}
+                      >
+                        {t("HomeBtn")}
+                      </Button>
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+          <div className="home-Img">
+            <img src={bookImg} alt="logo-img" className="homeimg" />
+          </div>
         </div>
-        <div className='home-Img'>
-                    <img  src={bookImg} alt='logo-img' className='homeimg'/>
-        </div>
-        
-      </div>
-      }
+      )}
     </div>
-    
-  )
+  );
 }
 
 export default Booked

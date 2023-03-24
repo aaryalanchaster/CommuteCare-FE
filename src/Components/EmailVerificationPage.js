@@ -10,10 +10,11 @@ import logo from "../Assets/logo.jpg";
 
 import { verifyOTP, resendOTP, resendOTPHelper, verifyOTPHelper, logout } from '../Routes/Login/AuthService';
 import { FormControl, NativeSelect } from '@mui/material';
-
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
 const ForgotPasswordPage = (props) => {
 
- 
+  const { t } = useTranslation();
   const email = props.data;
   const [otp, setOtp] = useState("");
   const [otpSent, setOtpSent] = useState(true);
@@ -116,80 +117,85 @@ const ForgotPasswordPage = (props) => {
 
 
   return (
-    <div className='emailVerification'>
-      
-        <div className='logo'>
-            <img src={logo} alt='logo-img' className='logo-img'></img>
-            <FormControl sx={{width: 100}}>
-                    <NativeSelect
-                    defaultValue={30}
-                    inputProps={{
-                        name: 'age',
-                        id: 'uncontrolled-native',
-                    }}
-                    >
-                    <option value="English">en-US</option>
-                    <option value="French">fr-FR</option>
-                    <option value="German">de-DE</option>
-                    <option value="Spanish">es-ES</option>
-                    </NativeSelect>
-                </FormControl>
-        </div>
-        <div className='emailVerificationGrid'>
+    <div className="emailVerification">
+      <div className="logo">
+        <img src={logo} alt="logo-img" className="logo-img"></img>
+        <FormControl sx={{ width: 100 }}>
+          <NativeSelect
+            defaultValue={30}
+            inputProps={{
+              name: "age",
+              id: "uncontrolled-native",
+            }}
+          >
+            <option value="English">en-US</option>
+            <option value="French">fr-FR</option>
+          </NativeSelect>
+        </FormControl>
+      </div>
+      <div className="emailVerificationGrid">
+        <div className="emailVerificationContent">
+          <div className="emailVerificationContainer">
+            <p>
+              {t("OTPsend")} {email}
+            </p>
+            <div className="otp-input">
+              <MuiOtpInput value={otp} onChange={handleOtpChange} />
+            </div>
+            {!canResendOtp && <p>{t("TryAgain")}</p>}
 
-              <div className='emailVerificationContent'>
+            <div className="single-line">
+              <div className="single-line-time">
+                <p>
+                  {remainingTime} {t("SecondsRemaining")}
+                </p>
+              </div>
 
-              
-                <div className='emailVerificationContainer'>
-                        <p>OTP has been sent to {email}</p>
-                        <div className='otp-input'>
-                          <MuiOtpInput value={otp} onChange={handleOtpChange} />
-                        </div>
-                        {!canResendOtp && <p>Try again later.</p>}
-                        
-                        <div className='single-line'>
-                          <div className='single-line-time'>
-                            <p>{remainingTime} seconds remaining....</p>
-                          </div>
-                            
-                          <div className='single-line-button'>
-                            {canResendOtp && (
-                              <button onClick={handleSendOtp} disabled={remainingTime !== 0} className='link'>
-                                Resend OTP
-                              </button>)}
-                          </div>  
-                            
-                            
-                        </div>
-                        <div className='verify'>
-                            <Button variant='outlined' sx={{
-                                ":hover": {
-                                bgcolor: "#006e5f4a",
-                                borderColor: "#006E60",
-                                },
-                                color: "white",
-                                backgroundColor: "#00720B",
-                                borderColor: "#006E60",
-                                "&.Mui-disabled":  {
-                                  background: "#eaeaea",
-                                  color: "#c0c0c0"
-                                },
-                              }} size="large" onClick={handleVerify} disabled={otp.length !== 4 || remainingTime === 0}>
-                                Verify
-                            </Button>
-                            
-                        </div>
-                        
-                        {otpError && <div className='error'>{otpError}</div>}
-                      </div>
-                </div>
-                <div className='image'>
-                    <img  src={image} alt='login-img'className='actual-img'/>
-                </div>
+              <div className="single-line-button">
+                {canResendOtp && (
+                  <button
+                    onClick={handleSendOtp}
+                    disabled={remainingTime !== 0}
+                    className="link"
+                  >
+                    {t("ResendBtn")}
+                  </button>
+                )}
+              </div>
+            </div>
+            <div className="verify">
+              <Button
+                variant="outlined"
+                sx={{
+                  ":hover": {
+                    bgcolor: "#006e5f4a",
+                    borderColor: "#006E60",
+                  },
+                  color: "white",
+                  backgroundColor: "#00720B",
+                  borderColor: "#006E60",
+                  "&.Mui-disabled": {
+                    background: "#eaeaea",
+                    color: "#c0c0c0",
+                  },
+                }}
+                size="large"
+                onClick={handleVerify}
+                disabled={otp.length !== 4 || remainingTime === 0}
+              >
+                {t("VerifyBtn")}
+              </Button>
+            </div>
+
+            {otpError && <div className="error">{otpError}</div>}
+          </div>
         </div>
-      
+        <div className="image">
+          <img src={image} alt="login-img" className="actual-img" />
+        </div>
+      </div>
     </div>
-  )
+  );
 }
 
 export default ForgotPasswordPage

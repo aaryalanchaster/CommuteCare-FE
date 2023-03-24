@@ -16,6 +16,9 @@ import { DatePicker } from '@mui/x-date-pickers';
 import { Button, FormControl, FormHelperText, InputLabel, MenuItem, NativeSelect, Select } from '@mui/material';
 
 
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
+
 const AdditionalHelperDetails = () => {
   const [firstName, setFirstName] = useState("");
   const [fnameErrorFlag, setfnameErrorFlag] = useState(false);
@@ -39,14 +42,14 @@ const AdditionalHelperDetails = () => {
   const [bio, setbio] = useState("");
   const [bioErrorFlag, setbioErrorFlag] = useState(false);
   const [bioError, setbioError] = useState("");
-
+const { t } = useTranslation();
 
   const navigate = new useNavigate();
 
   const handleFirstNameChange = (firstName) => {
     const regex = /^[A-Za-z\s]*$/;
     if (!regex.test(firstName)) {
-      setfnameError('Enter only alphabets');
+      setfnameError(t("errorAlphabets"));
       setfnameErrorFlag(true);
       return true;
     }
@@ -60,7 +63,7 @@ const AdditionalHelperDetails = () => {
   const handleLastNameChange = (lastName) => {
     const regex = /^[A-Za-z\s]*$/;
     if (!regex.test(lastName)) {
-      setlnameError('Enter only alphabets');
+      setlnameError(t("errorAlphabets"));
       setlnameErrorFlag(true);
       return true;
     }
@@ -73,7 +76,7 @@ const AdditionalHelperDetails = () => {
 
   const handleDobChange = (dob) => {
     if(!dob){
-      setdobError("Enter DOB");
+      setdobError(t("errorDOB"));
       setdobErrorFlag(true);
       return true;
     }
@@ -114,7 +117,7 @@ const AdditionalHelperDetails = () => {
   const handlePhotoChange = (event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile.size > 20000000) {
-      alert("File size should be less than 20MB");
+      alert(t("errorFile"));
       return;
     }
     //setPhoto(selectedFile);
@@ -123,7 +126,7 @@ const AdditionalHelperDetails = () => {
   const handlePhoneChange = (event) => {
     const regex = /^\d{10}$/;
     if (!regex.test(phone)) {
-      setPhoneError('Number Invalid');
+      setPhoneError(t("errorNumber"));
       setPhoneErrorFlag(true);
       return true;
     }
@@ -149,7 +152,7 @@ const AdditionalHelperDetails = () => {
 
   const handleBioChange = (bio) => {
     if(!bio){
-      setbioError('Enter your bio here');
+      setbioError(t("errorBio"));
       setbioErrorFlag(true);
       return true;
     }
@@ -166,19 +169,19 @@ const AdditionalHelperDetails = () => {
         || handleCountryCodeChange(countryCode) || handleGenderChange(gender) || handleBioChange(bio) || handleNationalityChange(nationality)
     ){
       if(firstName.length === 0){
-        setfnameError('Enter First Name');
+        setfnameError(t("errorFirstName"));
         setfnameErrorFlag(true);
       }
       if(lastName.length === 0){
-        setlnameError('Enter Last Name');
+        setlnameError(t("errorLastName"));
         setlnameErrorFlag(true);
       }
       if(phone.length === 0){
-        setPhoneError('Enter Phone Number');
+        setPhoneError(t("errorPhoneNumber"));
         setPhoneErrorFlag(true);
       }
       if(!dob){
-        setdobError("Enter DOB");
+        setdobError(t("errorDOB"));
         setdobErrorFlag(true);
       }
       if(!gender){
@@ -191,7 +194,7 @@ const AdditionalHelperDetails = () => {
         setnationalityErrorFlag(true);
       }
       if(!bio){
-        setbioError('Enter your bio here');
+        setbioError(t("errorBio"));
         setbioErrorFlag(true);
       }
       return false;
@@ -214,240 +217,248 @@ const AdditionalHelperDetails = () => {
 
 
   return (
-    <div className='signUp'>
-      <div className='logo'>
-          <img src={logo} alt='logo-img' className='logo-img'></img>
-          <FormControl sx={{width: 100}}>
-                    <NativeSelect
-                    defaultValue={30}
-                    inputProps={{
-                        name: 'age',
-                        id: 'uncontrolled-native',
-                    }}
-                    >
-                    <option value="English">en-US</option>
-                    <option value="French">fr-FR</option>
-                    <option value="German">de-DE</option>
-                    <option value="Spanish">es-ES</option>
-                    </NativeSelect>
-                </FormControl>
+    <div className="signUp">
+      <div className="logo">
+        <img src={logo} alt="logo-img" className="logo-img"></img>
+        <FormControl sx={{ width: 100 }}>
+          <NativeSelect
+            defaultValue={30}
+            inputProps={{
+              name: "age",
+              id: "uncontrolled-native",
+            }}
+          >
+            <option value="en">en-US</option>
+            <option value="fr">fr-FR</option>
+          </NativeSelect>
+        </FormControl>
       </div>
-      <div className='signup-grid'>
+      <div className="signup-grid">
+        <form onSubmit={handleSubmit} className="signup-form">
+          <div className="addtionalH-container">
+            <div className="addtionalH-field">
+              <TextField
+                id="signUp"
+                label={t("FirstNameLabel")}
+                variant="standard"
+                error={fnameErrorFlag}
+                helperText={fnameError}
+                type={"text"}
+                sx={{ width: 300, marginTop: 2 }}
+                value={firstName}
+                onChange={(e) => {
+                  setFirstName(e.target.value);
+                }}
+                inputProps={{ pattern: "[A-Za-z ]+" }}
+                required
+              />
+            </div>
+            <div className="addtionalH-field">
+              <TextField
+                id="signUp"
+                label={t("LastNameLabel")}
+                variant="standard"
+                error={lnameErrorFlag}
+                helperText={lnameError}
+                type={"text"}
+                sx={{ width: 300, marginTop: 3 }}
+                value={lastName}
+                onChange={(e) => {
+                  setLastName(e.target.value);
+                }}
+                inputProps={{ pattern: "[A-Za-z ]+" }}
+                required
+              />
+            </div>
+            <div className="addtionalH-field">
+              <div className="addtionalH-date">
+                <LocalizationProvider dateAdapter={AdapterDayjs} fullWidth>
+                  <DatePicker
+                    variant="standard"
+                    value={dob}
+                    label={t("DateofBirthLabel")}
+                    onChange={(newValue) => {
+                      setDob(newValue);
+                    }}
+                    maxDate={new Date()}
+                    required
+                    renderInput={(params) => (
+                      <TextField
+                        sx={{ width: "100%" }}
+                        {...params}
+                        error={dobErrorFlag}
+                        helperText={dobError}
+                      />
+                    )}
+                  />
+                </LocalizationProvider>
+              </div>
+            </div>
 
+            <div className="addtionalH-field">
+              <FormControl
+                variant="standard"
+                fullWidth
+                sx={{ width: 300, marginTop: 4.3, textAlign: "left" }}
+                error={genderErrorFlag}
+              >
+                <InputLabel id="gender">{t("GenderLabel")}</InputLabel>
+                <Select
+                  labelId="gender"
+                  id="gender"
+                  value={gender}
+                  label={t("GenderLabel")}
+                  onChange={(e) => {
+                    setGender(e.target.value);
+                  }}
+                  required
+                >
+                  <MenuItem value="Male">{t("MaleGender")}</MenuItem>
+                  <MenuItem value="Female">{t("FemaleGender")}</MenuItem>
+                  <MenuItem value="Others">{t("OtherGender")}</MenuItem>
+                  <MenuItem value="Prefer not to say">
+                    {t("PreferNSGender")}
+                  </MenuItem>
+                </Select>
+                <FormHelperText>
+                  {genderErrorFlag ? t("errorGender") : ""}
+                </FormHelperText>
+              </FormControl>
+            </div>
 
-                  <form onSubmit={handleSubmit} className='signup-form'>
-                    
-                    <div className='addtionalH-container'>
-                    <div className='addtionalH-field'>
-                      <TextField id="signUp" 
-                          label="First Name" 
-                          variant="standard"
-                          error = {fnameErrorFlag}
-                          helperText={fnameError}
-                          type={"text"}
-                          sx={{width: 300,
-                            marginTop: 2,
-                          }}
-                          value={firstName}
-                          onChange={(e) => {
-                            setFirstName(e.target.value);}}
-                          inputProps={{pattern: '[A-Za-z ]+'}}
-                          required/>
-                        
-                      </div>
-                      <div className='addtionalH-field'>
-                         <TextField id="signUp" 
-                          label="Last Name" 
-                          variant="standard"
-                          error = {lnameErrorFlag}
-                          helperText={lnameError}
-                          type={"text"}
-                          sx={{width: 300,
-                            marginTop: 3
-                          }}
-                          value={lastName}
-                          onChange={(e) => {
-                            setLastName(e.target.value);}}
-                          inputProps={{pattern: '[A-Za-z ]+'}}
-                          required/>
-                      </div>
-                      <div className='addtionalH-field'>
-                        <div className='addtionalH-date'> 
-                            <LocalizationProvider dateAdapter={AdapterDayjs} fullWidth>
-                              <DatePicker
-                                variant="standard"
-                                value={dob}
-                                
-                                label="Date of Birth"
-                                onChange={(newValue) => {
-                                  setDob(newValue);
-                                }}
-                                maxDate={new Date()}
-                                required
-                                renderInput={(params) => (
-                                  <TextField
-                                    sx={{ width: '100%' }}
-                                    {...params}
-                                    error={dobErrorFlag}
-                                    helperText={dobError}
-                                  />
-                                )}
-                              />
-                              </LocalizationProvider>
-                        </div>
-                          
-                      </div>
-                      
-                      
-                      <div className='addtionalH-field'>
-                        <FormControl variant="standard" fullWidth sx={{width: 300, marginTop: 4.3, textAlign: 'left'}} error={genderErrorFlag}>
-                          <InputLabel id="gender">Gender</InputLabel>
-                          <Select
-                            labelId="gender"
-                            id="gender"
-                            value={gender}
-                            label="gender"
-                            onChange={(e) => {
-                              setGender(e.target.value);}}
-                            required
-                            
-                          >
-                            <MenuItem value="Male">Male</MenuItem>
-                            <MenuItem value="Female">Female</MenuItem>
-                            <MenuItem value="Others">Others</MenuItem>
-                            <MenuItem value="Prefer not to say">Prefer not to say</MenuItem>
-                          </Select>
-                            <FormHelperText>{genderErrorFlag? "Enter gender": ""}</FormHelperText>
-                        </FormControl>
-
-                      </div>
-                      
-                      {/* <div className='signup-field'>
+            {/* <div className='signup-field'>
                         <label htmlFor="photo">Profile Photo:</label>
                         <input type="file" id="photo" onChange={handlePhotoChange}/>
                       </div> */}
-                      
 
-                      <div className='addtionalH-field'>
-                  
-                  <div className="addtionalH-phone-input">
-                        <FormControl variant="standard" sx={{width: 120, marginTop: 4.3}} error={countryCodeErrorFlag}>
-                          <InputLabel id="country-code">Country Code</InputLabel>
-                          <Select
-                            labelId="country-code"
-                            id="country-code"
-                            value={countryCode}
-                            label="Country Code"
-                            onChange={(e) => {
-                              setCountryCode(e.target.value);}}
-                            required
-                          >
-                            <MenuItem value={+1}>+1 (USA/CA)</MenuItem>
-                            <MenuItem value={+33}>+33 (FR)</MenuItem>
-                            <MenuItem value={+44}>+44 (UK)</MenuItem>
-                            <MenuItem value={+91}>+91 (India)</MenuItem>
-                          </Select>
-                          <FormHelperText>{countryCodeErrorFlag? "Enter Country Code": ""}</FormHelperText>
-                        </FormControl>
+            <div className="addtionalH-field">
+              <div className="addtionalH-phone-input">
+                <FormControl
+                  variant="standard"
+                  sx={{ width: 120, marginTop: 4.3 }}
+                  error={countryCodeErrorFlag}
+                >
+                  <InputLabel id="country-code">Country Code</InputLabel>
+                  <Select
+                    labelId="country-code"
+                    id="country-code"
+                    value={countryCode}
+                    label={t("CountryCodeLabel")}
+                    onChange={(e) => {
+                      setCountryCode(e.target.value);
+                    }}
+                    required
+                  >
+                    <MenuItem value={+1}>+1 (USA/CA)</MenuItem>
+                    <MenuItem value={+33}>+33 (FR)</MenuItem>
+                    <MenuItem value={+44}>+44 (UK)</MenuItem>
+                    <MenuItem value={+91}>+91 (India)</MenuItem>
+                  </Select>
+                  <FormHelperText>
+                    {countryCodeErrorFlag ? t("errorCountryCode") : ""}
+                  </FormHelperText>
+                </FormControl>
 
-                        <TextField id="phone" 
-                              label="Phone Number" 
-                              variant="standard"
-                              error = {phoneErrorFlag}
-                              helperText={phoneError}
-                              type={"text"}
-                              sx={{width: 150,
-                                marginTop: 3,
-                                marginLeft: 3
-                              }}
-                              value={phone}
-                              onChange={(e) => {
-                                setPhone(e.target.value);}}
-                              inputProps={{pattern: '[0-9]{10}', maxLength: 10 ,}}
-                              
-                              required/>
-                        
-                      </div>
-                    </div>
+                <TextField
+                  id="phone"
+                  label={t("PhoneNumberLabel")}
+                  variant="standard"
+                  error={phoneErrorFlag}
+                  helperText={phoneError}
+                  type={"text"}
+                  sx={{ width: 150, marginTop: 3, marginLeft: 3 }}
+                  value={phone}
+                  onChange={(e) => {
+                    setPhone(e.target.value);
+                  }}
+                  inputProps={{ pattern: "[0-9]{10}", maxLength: 10 }}
+                  required
+                />
+              </div>
+            </div>
 
-                      <div className='addtionalH-field'>
-                      <FormControl variant="standard" fullWidth sx={{width: 300, marginTop: 4.3, textAlign: 'left'}} error={nationalityErrorFlag}>
-                          <InputLabel id="nationality">Nationality</InputLabel>
-                          <Select
-                            labelId="nationality"
-                            id="nationality"
-                            value={nationality}
-                            label="nationality"
-                            onChange={(e) => {
-                              setNationality(e.target.value);}}
-                            required
-                            
-                          >
-                            {nationalityPlaces.map((option,index) =>(
-                              <MenuItem key={index} value={option.value}>
-                                  {option.text}
-                                </MenuItem>
-                            ))}
-                            
-                          </Select>
-                            <FormHelperText>{nationalityErrorFlag? "Enter nationality": ""}</FormHelperText>
-                        </FormControl>
-                                          
-                      </div>
+            <div className="addtionalH-field">
+              <FormControl
+                variant="standard"
+                fullWidth
+                sx={{ width: 300, marginTop: 4.3, textAlign: "left" }}
+                error={nationalityErrorFlag}
+              >
+                <InputLabel id="nationality">Nationality</InputLabel>
+                <Select
+                  labelId="nationality"
+                  id="nationality"
+                  value={nationality}
+                  label={"NationalityLabel"}
+                  onChange={(e) => {
+                    setNationality(e.target.value);
+                  }}
+                  required
+                >
+                  {nationalityPlaces.map((option, index) => (
+                    <MenuItem key={index} value={option.value}>
+                      {option.text}
+                    </MenuItem>
+                  ))}
+                </Select>
+                <FormHelperText>
+                  {nationalityErrorFlag ? t("errorNationality") : ""}
+                </FormHelperText>
+              </FormControl>
+            </div>
 
-                      <div className='addtionalH-field'>
-                        <div className='addtionalH-textfield'>
-                        <TextField
-                            id="bio"
-                            value={bio}
-                            onChange={(e) => {
-                              setbio(e.target.value);}}
-                            placeholder="Enter your bio here (150 wordlimit)"
-                            multiline
-                            rows={3}
-                            maxRows={4}
-                            sx={{
-                              width: 300,
-                              marginTop: 5
-                            }}
-                            error={bioErrorFlag}
-                            helperText={bioError}
-                            inputProps={{ maxLength: 150 }}
-                            label='About me'
-                          />
-                        </div>
-                          
-                        
-                      </div>
-                      
-                      <div className='addtionalH-field'>
-                        
+            <div className="addtionalH-field">
+              <div className="addtionalH-textfield">
+                <TextField
+                  id="bio"
+                  value={bio}
+                  onChange={(e) => {
+                    setbio(e.target.value);
+                  }}
+                  placeholder={t("BioPH")}
+                  multiline
+                  rows={3}
+                  maxRows={4}
+                  sx={{
+                    width: 300,
+                    marginTop: 5,
+                  }}
+                  error={bioErrorFlag}
+                  helperText={bioError}
+                  inputProps={{ maxLength: 150 }}
+                  label={t("AboutMeLabel")}
+                />
+              </div>
+            </div>
 
-                            <Button variant='outlined' sx={{
-                                  ":hover": {
-                                  bgcolor: "#006e5f4a",
-                                  borderColor: "#006E60",
-                                  },
-                                  color: "white",
-                                  backgroundColor: "#00720B",
-                                  borderColor: "#006E60",
-                                  width: 150,
-                                  marginTop: 4
-                                }} size="large" onClick={handleSubmit}>
-                                  Submit
-                              </Button>
-                        
-                            
-                      </div>
-                    </div>
-                  </form>
-                  <div className='image'>
-                    <img  src={image} alt='login-img'className='actual-img'/>
-              
-                  </div>
+            <div className="addtionalH-field">
+              <Button
+                variant="outlined"
+                sx={{
+                  ":hover": {
+                    bgcolor: "#006e5f4a",
+                    borderColor: "#006E60",
+                  },
+                  color: "white",
+                  backgroundColor: "#00720B",
+                  borderColor: "#006E60",
+                  width: 150,
+                  marginTop: 4,
+                }}
+                size="large"
+                onClick={handleSubmit}
+              >
+                {t("SubmitBtn")}
+              </Button>
+            </div>
+          </div>
+        </form>
+        <div className="image">
+          <img src={image} alt="login-img" className="actual-img" />
+        </div>
       </div>
     </div>
-  )
+  );
 }
 
 export default AdditionalHelperDetails

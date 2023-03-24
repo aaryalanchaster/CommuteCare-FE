@@ -5,8 +5,10 @@ import logo from "../Assets/logo.jpg";
 
 import { forgotPass, forgotPassHelper } from "../Routes/Login/AuthService";
 import { Button, FormControl, NativeSelect, TextField } from "@mui/material";
-
+import i18n from "../Translation/i18n";
+import { initReactI18next, useTranslation, Translation } from "react-i18next";
 const ForgotPasswordPage = (props) => {
+   const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [emailFlag, setEmailFlag] = useState(false);
   const [emailError, setEmailError] = useState("");
@@ -20,7 +22,7 @@ const ForgotPasswordPage = (props) => {
     const regex =
       /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!regex.test(email)) {
-      setEmailError("Please enter a valid email address");
+      setEmailError(t("errorValidEmail"));
       setEmailFlag(true);
       return true;
     } else {
@@ -33,7 +35,7 @@ const ForgotPasswordPage = (props) => {
   const handleSendOtp = async (event) => {
     if (validateEmail(email)) {
       if (email.length === 0) {
-        setEmailError("Enter Email");
+        setEmailError(t("errorEmail"));
         setEmailFlag(true);
       }
       return false;
@@ -64,20 +66,18 @@ const ForgotPasswordPage = (props) => {
     <div className="forgot">
       <div className="logo">
         <img src={logo} alt="logo-img" className="logo-img"></img>
-        <FormControl sx={{width: 100}}>
-                    <NativeSelect
-                    defaultValue={30}
-                    inputProps={{
-                        name: 'age',
-                        id: 'uncontrolled-native',
-                    }}
-                    >
-                    <option value="English">en-US</option>
-                    <option value="French">fr-FR</option>
-                    <option value="German">de-DE</option>
-                    <option value="Spanish">es-ES</option>
-                    </NativeSelect>
-                </FormControl>
+        <FormControl sx={{ width: 100 }}>
+          <NativeSelect
+            defaultValue={30}
+            inputProps={{
+              name: "age",
+              id: "uncontrolled-native",
+            }}
+          >
+            <option value="en">en-US</option>
+            <option value="fr">fr-FR</option>
+          </NativeSelect>
+        </FormControl>
       </div>
       <div className="forgot-container">
         {!otpSent ? (
@@ -91,7 +91,7 @@ const ForgotPasswordPage = (props) => {
             <br></br>
             <TextField
               id="signUp"
-              label="Email"
+              label={t("EmailLabel")}
               variant="standard"
               error={emailFlag}
               helperText={emailError}
@@ -120,17 +120,18 @@ const ForgotPasswordPage = (props) => {
               size="large"
               onClick={handleSendOtp}
             >
-              Submit
+              {t("SubmitBtn")}
             </Button>
           </div>
         ) : (
           <div className="forgot-component">
-            {errorFlag? <p className="forgot-label">
-              {serror}
-            </p> : <p className="forgot-label">
-              Password reset link has been sent to {email}
-            </p>}
-            
+            {errorFlag ? (
+              <p className="forgot-label">{serror}</p>
+            ) : (
+              <p className="forgot-label">
+                Password reset link has been sent to {email}
+              </p>
+            )}
           </div>
         )}
       </div>
