@@ -76,10 +76,10 @@ const NavBar = () => {
         {userLoggedIn === "true" ? (
           <>
             <li>
-              <Link to="/">t{"Home"}</Link>{" "}
+              <Link to="/">{t("Home")}</Link>{" "}
             </li>
             <li>
-              <Link to="/history">{toString("Booking")}</Link>{" "}
+              <Link to="/history">{t("Booking")}</Link>{" "}
             </li>
 
             {userType === "Customer" && (
