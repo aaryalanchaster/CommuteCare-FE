@@ -1,6 +1,7 @@
 .reservation{
     width: 100%;
-    height: 110vh;
+    min-height: 100vh;
+    position: absolute;
     background-color: #ECF7E6;
     padding-top: 5%;
 }
