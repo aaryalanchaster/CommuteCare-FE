@@ -172,6 +172,7 @@ const CustomerProfilePage = () => {
               setisLoading(false);
         }
         fetchData();
+        i18n.changeLanguage(localStorage.getItem('lang'));
     }, [])
     
   return (

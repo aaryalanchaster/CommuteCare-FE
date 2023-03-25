@@ -65,6 +65,7 @@ const Chat = (props) => {
           : getMessagesHelper(),
       2000
     );
+    i18n.changeLanguage(localStorage.getItem('lang'));
   }, []);
 
   const handleChatSendUser = async () => {

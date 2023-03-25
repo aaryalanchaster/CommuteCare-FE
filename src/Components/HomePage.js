@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './HomePage.css'
 import logo from "../Assets/logo.jpg";
 import homeImg from '../Assets/home-page.jpg';
@@ -12,6 +12,12 @@ import CustomNav from './CustomNav';
 const HomePage = () => {
     const { t } = useTranslation();
     const navigate = new useNavigate();
+    useEffect(() => {
+        
+      i18n.changeLanguage(localStorage.getItem('lang'));
+      console.log('lang--',localStorage.getItem('lang'))
+      
+    }, [])
   return (
     <div className="home">
       <div className="eclipse">

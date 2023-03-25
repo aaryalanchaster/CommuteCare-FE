@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './LoginChoicePage.css';
 import logo from "../Assets/logo.jpg";
 import { FormControl, NativeSelect } from '@mui/material';
@@ -25,6 +25,12 @@ const CustomNav = () => {
     
         // console.log( t("welcome") );
   }
+  useEffect(() => {
+        
+    i18n.changeLanguage(localStorage.getItem('lang'));
+    console.log('lang--',localStorage.getItem('lang'))
+    
+  }, [])
 
   return (
     <div>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
 import logo from "../Assets/logo.jpg";
@@ -135,6 +135,13 @@ const SignUpPage = (props) => {
       }
     }
   };
+
+  useEffect(() => {
+        
+    i18n.changeLanguage(localStorage.getItem('lang'));
+    console.log('lang--',localStorage.getItem('lang'))
+    
+  }, [])
 
   return (
     <div className="signUp">

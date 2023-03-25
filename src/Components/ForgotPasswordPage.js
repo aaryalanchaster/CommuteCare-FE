@@ -63,6 +63,13 @@ const ForgotPasswordPage = (props) => {
     setOtpSent(true);
   };
 
+  useEffect(() => {
+        
+    i18n.changeLanguage(localStorage.getItem('lang'));
+    console.log('lang--',localStorage.getItem('lang'))
+    
+  }, [])
+
   return (
     <div className="forgot">
       <CustomNav />

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './ReviewAndReport.css';
 import logo from "../Assets/logo.jpg";
 import { Alert, Button, FormControl, NativeSelect, Rating, TextField } from '@mui/material';
@@ -48,6 +48,13 @@ const Review = () => {
         //after successful submission
       
     };
+
+    useEffect(() => {
+        
+      i18n.changeLanguage(localStorage.getItem('lang'));
+      console.log('lang--',localStorage.getItem('lang'))
+      
+    }, [])
 
   return (
     <div className='review'>

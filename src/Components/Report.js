@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./ReviewAndReport.css";
 import { useState } from "react";
 import { Alert, AlertTitle, Button, TextField } from "@mui/material";
@@ -102,6 +102,13 @@ const Report = () => {
       }
     }
   };
+
+  useEffect(() => {
+        
+    i18n.changeLanguage(localStorage.getItem('lang'));
+    console.log('lang--',localStorage.getItem('lang'))
+    
+  }, [])
   
 
   return (

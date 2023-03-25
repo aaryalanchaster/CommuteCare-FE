@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import { login, loginHelper } from "../Routes/Login/AuthService";
@@ -98,6 +98,13 @@ const LoginPage = (props) => {
       }
     }
   };
+
+  useEffect(() => {
+        
+    i18n.changeLanguage(localStorage.getItem('lang'));
+    console.log('lang--',localStorage.getItem('lang'))
+    
+  }, [])
 
   return (
     <div className="login">

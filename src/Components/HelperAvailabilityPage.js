@@ -137,6 +137,7 @@ const HelperAvailabilityPage = () => {
   useEffect(() => {
       
     fetchAvailability();
+    i18n.changeLanguage(localStorage.getItem('lang'));
     
   }, []);
 

@@ -81,7 +81,7 @@ const { t } = useTranslation();
         setIsLoading(false);
     }
     fetchData();
-    
+    i18n.changeLanguage(localStorage.getItem('lang'));
     
   }, []); 
 

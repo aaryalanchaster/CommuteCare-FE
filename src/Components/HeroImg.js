@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './HeroImg.css';
 
 
@@ -8,6 +8,12 @@ import i18n from "../Translation/i18n";
 import { initReactI18next, useTranslation, Translation } from "react-i18next";
 const HeroImg = () => {
    const { t } = useTranslation();
+   useEffect(() => {
+        
+    i18n.changeLanguage(localStorage.getItem('lang'));
+    console.log('lang--',localStorage.getItem('lang'))
+    
+  }, [])
   return (
     <div className="hero">
       <div className="mask">

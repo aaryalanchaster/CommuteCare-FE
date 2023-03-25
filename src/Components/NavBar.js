@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './NavBar.css';
 
 import { Link } from "react-router-dom";
@@ -63,18 +63,25 @@ const NavBar = () => {
      const handleChange = (event) => {
         setlanguage(event.target.value);
         localStorage.setItem('lang', event.target.value);
-        console.log(event.target.value);
+        console.log("lang",event.target.value);
 
           // console.log(event.target.value);
       
           i18n.changeLanguage(event.target.value);
       
-          console.log(i18n.language);
+          //console.log(i18n.language);
       
           // console.log( t("welcome") );
       
         };
 
+      useEffect(() => {
+        
+        i18n.changeLanguage(localStorage.getItem('lang'));
+        console.log('lang--',localStorage.getItem('lang'))
+        
+      }, [])
+      
 
 
   return (
@@ -87,8 +94,8 @@ const NavBar = () => {
                 userLoggedIn === 'true'? <>
 
           
-            <li><Link to="/">Home</Link> </li>
-            <li><Link to="/history">Booking</Link> </li>
+            <li><Link to="/">{t("Home")}</Link> </li>
+            <li><Link to="/history">{t("Booking")}</Link> </li>
            
 
             {

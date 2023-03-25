@@ -28,7 +28,7 @@ const ForgotPasswordPage = (props) => {
 
 
   useEffect(() => {
-
+    i18n.changeLanguage(localStorage.getItem('lang'));
     let timer;
     if (remainingTime > 0 && otpSent) {
       timer = setTimeout(() => setRemainingTime(remainingTime - 1), 1000);

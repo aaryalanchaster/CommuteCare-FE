@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./Reservation.css";
 import Calendar from "react-calendar";
 
@@ -87,6 +87,14 @@ const Reservation = () => {
 
   console.log("Date:", date);
   console.log("Date:", time);
+
+  useEffect(() => {
+        
+    i18n.changeLanguage(localStorage.getItem('lang'));
+    console.log('lang--',localStorage.getItem('lang'))
+    
+  }, [])
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="reservation">

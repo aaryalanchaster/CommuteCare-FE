@@ -2,6 +2,7 @@ import React, {useEffect} from 'react'
 import Booked from '../Components/Booked'
 import NavBar from '../Components/NavBar'
 import { useLocation, useNavigate } from 'react-router-dom';
+import i18n from '../Translation/i18n';
 
 const ConfirmationPage = () => {
     const location = useLocation();
@@ -9,6 +10,7 @@ const ConfirmationPage = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+      i18n.changeLanguage(localStorage.getItem('lang'));
 
       const backButtonCheck = (event) => {
         if(window.location.pathname === '/availableHelpers'){

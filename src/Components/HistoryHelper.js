@@ -137,6 +137,7 @@ const HistoryHelper = () => {
 
   useEffect(() => {
     isPendingBookings ? getPendingBookings() : getConfirmedBookings();
+    i18n.changeLanguage(localStorage.getItem('lang'));
   }, [isPendingBookings, isrefresh]);
 
   return (

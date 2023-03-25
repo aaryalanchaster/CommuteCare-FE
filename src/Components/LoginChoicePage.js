@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './LoginChoicePage.css'
 import IntroImg from "../Assets/loginchoicescreen.jpg";
 import logo from "../Assets/logo.jpg";
@@ -12,6 +12,12 @@ import CustomNav from './CustomNav';
 const LoginChoicePage = () => {
   const navigate = new useNavigate();
   const { t } = useTranslation();
+  useEffect(() => {
+        
+    i18n.changeLanguage(localStorage.getItem('lang'));
+    console.log('lang--',localStorage.getItem('lang'))
+    
+  }, [])
   return (
     <div className='choice'>
       <CustomNav />

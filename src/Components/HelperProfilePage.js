@@ -219,6 +219,7 @@ const HelperProfilePage = () => {
               setisLoading(false);
         }
         fetchData();
+        i18n.changeLanguage(localStorage.getItem('lang'));
     }, [])
 
     

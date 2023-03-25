@@ -17,6 +17,7 @@ import {
 import "./History.css";
 
 import ReactLoading from 'react-loading';
+import i18n from "../Translation/i18n";
 
 const History = () => {
   const navigate = useNavigate();
@@ -96,6 +97,7 @@ const History = () => {
   useEffect(() => {
     console.log(isCurrentBookings);
     isCurrentBookings ? getBookingsData() : getHistoryData();
+    i18n.changeLanguage(localStorage.getItem('lang'));
   }, [isCurrentBookings, isrefresh]);
 
   return (

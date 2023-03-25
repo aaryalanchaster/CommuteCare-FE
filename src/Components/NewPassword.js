@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { passwordChange, passwordChangeHelper } from '../Routes/Login/AuthService';
@@ -103,6 +103,13 @@ const NewPassword = () => {
     }
 
   };
+
+  useEffect(() => {
+        
+    i18n.changeLanguage(localStorage.getItem('lang'));
+    console.log('lang--',localStorage.getItem('lang'))
+    
+  }, [])
   return (
     <div className='new-password-page'>
       <CustomNav />
