@@ -1,0 +1,48 @@
+.reservation{
+    width: 100%;
+    min-height: 100vh;
+    position: absolute;
+    background-color: #ECF7E6;
+    padding-top: 5%;
+}
+
+.reservation .reservation-grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding-top: 5%;
+}
+
+.reservation .reservation-grid .reservation-container{
+    display: flex;
+    flex-direction: column;  
+    margin: 5% 20%;
+  
+}
+
+
+.reservation .reservation-grid .reservation-container .reservation-date-time{
+    display: flex;
+    gap: 10%;
+}
+
+.time-required{
+    padding-top: 3%;
+}
+
+.time-required .label{
+  padding-bottom: 2%;
+}
+
+.text-area{
+  padding-top: 5%;
+}
+
+.location{
+  padding-top: 22%;
+}
+
+.reservation .reservation-grid .reservation-container .submit{
+  
+  padding-left: 25%;
+}
+

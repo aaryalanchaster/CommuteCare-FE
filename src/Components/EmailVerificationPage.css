@@ -1,0 +1,114 @@
+.emailVerification{
+  width: 100%;
+  height: 100vh;
+  background-color: #ECF7E6;
+}
+
+.emailVerificationGrid{
+  display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.emailVerificationContainer{
+    display: flex;
+    flex-direction: column;
+    margin: 15%;
+    align-items: center;
+}
+
+
+.forgot-container {
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+
+.forgot-comp{
+    padding-top: 10%;
+    display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  width: 80%;
+}
+
+.label{
+    padding-top: 5%;
+    font-weight: 500;
+}
+
+  #otp-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+   
+   
+  }
+  
+  #otp-input {
+    width: 100%;
+    height: 90px;
+    margin-top: 1px;
+    font-size: 16px;
+    padding: 1px;
+    text-align: center;
+  }
+  
+  #otp-message {
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  #otp-timer {
+    margin-top: 20px;
+    font-size: 16px;
+    text-align: center;
+  }
+  
+  
+
+  .emailVerificationContainer p{
+    font-weight: 400;
+    color: #028B28;
+    font-size: 20px;
+    padding-bottom: 10%;
+  }
+
+  .otp-input{
+    margin: 5% 25%;
+    
+  }
+
+  .css-1t8l2tu-MuiInputBase-input-MuiOutlinedInput-input{
+    background: #5FBA57 !important;
+    color: white !important;
+    border-radius: 5px;
+    
+  }
+
+  .single-line{
+    display: flex;
+    width: 90%;
+  }
+
+  .single-line-time{
+    width: 100%;
+    padding-left: 15%;
+  }
+
+  .single-line-button{
+    width: 50%;
+  }
+
+  .single-line-button .link{
+    cursor: pointer;
+    width: 70%;
+    background: none;
+    border: none;
+    font-size: 16px;
+  }

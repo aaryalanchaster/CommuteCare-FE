@@ -1,0 +1,39 @@
+.booked{
+    width: 100%;
+    padding-top: 5%;
+    background-color: #ECF7E6;
+    height: 100vh;
+}
+
+.booked-container{
+    height: 30vh;
+    margin: 5% 3%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10%;
+}
+
+.booked-content{
+    height: 50vh;
+    text-align: center;
+    padding-top: 5%;
+    
+}
+
+.booked-content p{
+    text-align: left;
+    
+    margin: 5% 20%;
+    font-size: 1.5rem;
+}
+
+.booked-content h1{
+    color: #006E60;
+    margin-left: 6%;
+}
+
+.booked-content .booked-buttons{
+    display: flex;
+    justify-content: space-between;
+    padding: 5% 20%;
+}
