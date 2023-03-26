@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const url ="https://commutecare-vercel.vercel.app"
-  // "https://commutecare.herokuapp.com"; // http://localhost:5000   // https://commutecare.herokuapp.com
+const url = "https://commutecare-vercel.vercel.app";
+// "https://commutecare.herokuapp.com"; // http://localhost:5000   // https://commutecare.herokuapp.com
 
 export const login = async (email, password, data) => {
   const response = await axios.post(`${url}/userLogin`, {
@@ -237,7 +237,7 @@ export const editAvailability = async (availability) => {
       Tuesday: availability.Tuesday,
       Wednesday: availability.Wednesday,
       Thursday: availability.Thursday,
-      Friday: availability.Firday,
+      Friday: availability.Friday,
       Saturday: availability.Saturday,
       Sunday: availability.Sunday,
     },
@@ -321,7 +321,15 @@ export const displayAvailHelperList = async (day, time, duration) => {
   return response;
 };
 
-export const bookingHelper = async (helperId, day, time, duration, date, location, comments) => {
+export const bookingHelper = async (
+  helperId,
+  day,
+  time,
+  duration,
+  date,
+  location,
+  comments
+) => {
   const token = localStorage.getItem("User");
   const response = axios.post(
     `${url}/book`,
@@ -455,27 +463,34 @@ export const cancelBooking = async (bookingId) => {
 
 export const reportIssue = async (email, title, description) => {
   const token = localStorage.getItem("User");
-  const response = axios.post(`${url}/report`,{
-    email: email,
-    title: title,
-    detailedDescription: description,
-   } ,{
-    headers: {
-      Authorization: `Bearer ${JSON.parse(token)}`,
+  const response = axios.post(
+    `${url}/report`,
+    {
+      email: email,
+      title: title,
+      detailedDescription: description,
     },
-  });
+    {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+    }
+  );
   return response;
 };
 
-
 export const completeBooking = async (bookingId) => {
   const token = localStorage.getItem("User");
-  const response = axios.post(`${url}/complete-help`,{
-    bookingId: bookingId,
-   } ,{
-    headers: {
-      Authorization: `Bearer ${JSON.parse(token)}`,
+  const response = axios.post(
+    `${url}/complete-help`,
+    {
+      bookingId: bookingId,
     },
-  });
+    {
+      headers: {
+        Authorization: `Bearer ${JSON.parse(token)}`,
+      },
+    }
+  );
   return response;
 };
