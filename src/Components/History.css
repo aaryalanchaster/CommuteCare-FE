@@ -2,24 +2,27 @@
   padding-top: 10%;
   background-color: #ECF7E6;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  position: absolute  ;
 }
 .history .history-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   margin: 0 10%;
   gap: 3%;
+  position: relative;
+  margin-bottom: 20%;
 }
 .history .history-container .booking-card {
   display: flex;
   flex-direction: column;
   width: 400px;
-  height: 320px;
-  
+  height: 300px;
   justify-content: flex-start;
   background: #FFFFFF;
   border: 2px solid #028B28;
   border-radius: 15px;
+  position: relative;
   }
   .history .history-container .booking-card .booking-name{
     padding-left: 30px;
@@ -30,9 +33,9 @@
   }
 
 .history .history-buttons {
-  position: fixed;
+  position: relative;
   bottom: 100px;
-  left: 38%;
+  left: 36%;
   justify-content: space-between;
   
 }

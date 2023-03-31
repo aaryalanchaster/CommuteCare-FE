@@ -5,15 +5,15 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useState } from 'react';
 import './SignUpPage.css'
 import { useNavigate } from 'react-router-dom';
-import logo from "../Assets/logo.jpg";
-import image from '../Assets/home-page.jpg';
 
+import image from '../Assets/home-page.jpg';
+import ReactLoading from 'react-loading';
 
 
 import { additionalDetailsHelper, logout } from '../Routes/Login/AuthService';
 import { nationalityPlaces } from '../Assets/data';
 import { DatePicker } from '@mui/x-date-pickers';
-import { Button, FormControl, FormHelperText, InputLabel, MenuItem, NativeSelect, Select } from '@mui/material';
+import { Avatar, Button, FormControl, FormHelperText, InputLabel, MenuItem, NativeSelect, Select } from '@mui/material';
 
 
 import i18n from "../Translation/i18n";
@@ -32,7 +32,11 @@ const AdditionalHelperDetails = () => {
   const [dobError, setdobError] = useState("");
   const [gender, setGender] = useState("");
   const [genderErrorFlag, setgenderErrorFlag] = useState(false);
-  // const [photo, setPhoto] = useState(null);
+  const [isLoading, setisLoading] = useState(false);
+
+   const [photo, setPhoto] = useState(null);
+   const [previewImage, setPreviewImage] = useState(null);
+
   const [phone, setPhone] = useState("");
   const [phoneErrorFlag, setPhoneErrorFlag] = useState(false);
   const [phoneError, setPhoneError] = useState("");
@@ -43,6 +47,7 @@ const AdditionalHelperDetails = () => {
   const [bio, setbio] = useState("");
   const [bioErrorFlag, setbioErrorFlag] = useState(false);
   const [bioError, setbioError] = useState("");
+  
 const { t } = useTranslation();
 
   const navigate = new useNavigate();
@@ -76,7 +81,8 @@ const { t } = useTranslation();
   };
 
   const handleDobChange = (dob) => {
-    if(!dob){
+    console.log("Heyyyyy:", dobErrorFlag)
+    if(!dob || dobErrorFlag){
       setdobError(t("errorDOB"));
       setdobErrorFlag(true);
       return true;
@@ -121,7 +127,12 @@ const { t } = useTranslation();
       alert(t("errorFile"));
       return;
     }
-    //setPhoto(selectedFile);
+    setPhoto(selectedFile);
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedFile);
+    reader.onloadend = () => {
+      setPreviewImage(reader.result);
+    };
   };
 
   const handlePhoneChange = (event) => {
@@ -202,8 +213,9 @@ const { t } = useTranslation();
     }
     const date = (dob.$M +1)+"/"+dob.$D+"/"+dob.$y;
     try {
-      await additionalDetailsHelper(firstName, lastName, gender, date, phone, bio, nationality);
-      navigate('/helperAvailability');
+      setisLoading(true);
+      await additionalDetailsHelper(firstName, lastName, gender, date, phone, bio, nationality, photo);
+      navigate('/helperHome');
     } catch (error) {
       console.error('error', error);
       if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
@@ -211,6 +223,7 @@ const { t } = useTranslation();
         navigate('/');
       }
     }
+    setisLoading(false);
     
     
     
@@ -222,9 +235,12 @@ const { t } = useTranslation();
     
   }, [])
 
+  //console.log("photp",photo);
+
   return (
     <div className="signUp">
       <CustomNav />
+      {isLoading? <div className='loading'><ReactLoading type="spin" color="#000" /></div> : <>
       <div className="signup-grid">
         <form onSubmit={handleSubmit} className="signup-form">
           <div className="addtionalH-container">
@@ -270,7 +286,17 @@ const { t } = useTranslation();
                     value={dob}
                     label={t("DateofBirthLabel")}
                     onChange={(newValue) => {
-                      setDob(newValue);
+                      
+                      if(newValue>new Date() || newValue.$d.toString()==='Invalid Date'){
+                          console.log("Helloooooo")
+                        setdobErrorFlag(true);
+                        
+                      }else{
+                        setDob(newValue);
+                        setdobErrorFlag(false);
+                        //console.log("dob:",dob);
+                      }
+                      
                     }}
                     maxDate={new Date()}
                     required
@@ -318,10 +344,7 @@ const { t } = useTranslation();
               </FormControl>
             </div>
 
-            {/* <div className='signup-field'>
-                        <label htmlFor="photo">Profile Photo:</label>
-                        <input type="file" id="photo" onChange={handlePhotoChange}/>
-                      </div> */}
+             
 
             <div className="addtionalH-field">
               <div className="addtionalH-phone-input">
@@ -423,6 +446,16 @@ const { t } = useTranslation();
               </div>
             </div>
 
+            <div className='addtionalH-field'>
+                <div className='addtionalH-field-profile-photo'>
+                  <Avatar src={previewImage}
+                    sx={{ width: 100, height: 100 }}
+                        >     
+                        </Avatar>
+                  <input type="file" id="photo" className='photo-field' onChange={handlePhotoChange}/>
+                </div>
+              </div> 
+
             <div className="addtionalH-field">
               <Button
                 variant="outlined"
@@ -449,6 +482,7 @@ const { t } = useTranslation();
           <img src={image} alt="login-img" className="actual-img" />
         </div>
       </div>
+      </>}
     </div>
   );
 }

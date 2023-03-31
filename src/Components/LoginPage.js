@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 import { login, loginHelper } from "../Routes/Login/AuthService";
 import loginImg from "../Assets/home-page.jpg";
-import logo from "../Assets/logo.jpg";
+
 
 import TextField from "@mui/material/TextField";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -11,10 +11,10 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
-import { FormControl, NativeSelect } from "@mui/material";
+import ReactLoading from 'react-loading';
 
 import i18n from "../Translation/i18n";
-import { initReactI18next, useTranslation, Translation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import CustomNav from "./CustomNav";
 const LoginPage = (props) => {
   const { t } = useTranslation();
@@ -25,6 +25,7 @@ const LoginPage = (props) => {
   const [passwordError, setPasswordError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [error, seterror] = useState("");
+  const [isLoading, setisLoading] = useState(false);
 
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -81,21 +82,25 @@ const LoginPage = (props) => {
     }
     if (props.data === "Customer") {
       try {
+        setisLoading(true);
         await login(email, password, props.data);
         navigate("/customer");
       } catch (error) {
         console.error("error", error.response);
         seterror(error.response.data.message);
       }
+      setisLoading(false);
     }
     if (props.data === "Helper") {
       try {
+        setisLoading(true);
         await loginHelper(email, password, props.data);
         navigate("/helperHome");
       } catch (error) {
         console.error("error", error);
         seterror(error.response.data.message);
       }
+      setisLoading(false);
     }
   };
 
@@ -109,6 +114,8 @@ const LoginPage = (props) => {
   return (
     <div className="login">
       <CustomNav />
+      
+      {isLoading? <div className='loading'><ReactLoading type="spin" color="#000" /></div> : <>
       <div className="login-comp">
         <form className="login-form" id="login">
           {/*<h2>Login</h2>
@@ -217,6 +224,9 @@ const LoginPage = (props) => {
           <img src={loginImg} alt="login-img" className="logoimg" />
         </div>
       </div>
+      </>
+      }
+
     </div>
   );
 };

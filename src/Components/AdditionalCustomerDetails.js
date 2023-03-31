@@ -4,7 +4,7 @@ import TextField from '@mui/material/TextField';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useState } from 'react';
 import './SignUpPage.css'
-import logo from "../Assets/logo.jpg";
+
 import image from '../Assets/home-page.jpg';
 
 import { additionalDetails, logout } from '../Routes/Login/AuthService';
@@ -15,10 +15,14 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { DatePicker } from '@mui/x-date-pickers';
-import { Button, FormHelperText, NativeSelect } from '@mui/material';
+import { Avatar, Button, FormHelperText, NativeSelect } from '@mui/material';
 import i18n from "../Translation/i18n";
 import { initReactI18next, useTranslation, Translation } from "react-i18next";
 import CustomNav from './CustomNav';
+
+import ReactLoading from 'react-loading';
+
+
 const AdditionalCustomerDetails = () => {
   const [firstName, setFirstName] = useState("");
   const [fnameErrorFlag, setfnameErrorFlag] = useState(false);
@@ -32,7 +36,12 @@ const AdditionalCustomerDetails = () => {
   const [gender, setGender] = useState("");
   const [genderErrorFlag, setgenderErrorFlag] = useState(false);
   const [genderError, setgenderError] = useState("");
- //  const [photo, setPhoto] = useState(null);
+  const [isLoading, setisLoading] = useState(false);
+
+  const [photo, setPhoto] = useState(null);
+   const [previewImage, setPreviewImage] = useState(null);
+
+
   const [phone, setPhone] = useState("");
   const [phoneErrorFlag, setPhoneErrorFlag] = useState(false);
   const [phoneError, setPhoneError] = useState("");
@@ -89,7 +98,12 @@ const { t } = useTranslation();
       alert(t("errorFile"));
       return;
     }
-    //setPhoto(selectedFile);
+    setPhoto(selectedFile);
+    const reader = new FileReader();
+    reader.readAsDataURL(selectedFile);
+    reader.onloadend = () => {
+      setPreviewImage(reader.result);
+    };
   };
 
   const handlePhoneChange = (phone) => {
@@ -120,7 +134,7 @@ const { t } = useTranslation();
   };
 
   const handleDobChange = (dob) => {
-    if(!dob){
+    if(!dob || dobErrorFlag){
       setdobError(t("errorDOB"));
       setdobErrorFlag(true);
       return true;
@@ -132,6 +146,7 @@ const { t } = useTranslation();
     }
   }
 
+  
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -165,7 +180,8 @@ const { t } = useTranslation();
     const date = (dob.$M +1)+"/"+dob.$D+"/"+dob.$y;
     console.log("dob: ", date);
     try {
-      await additionalDetails(firstName, lastName, gender, date, phone);
+      setisLoading(true);
+      await additionalDetails(firstName, lastName, gender, date, phone, photo);
       navigate("/customer");
     } catch (error) {
       console.error('error', error);
@@ -174,6 +190,7 @@ const { t } = useTranslation();
         navigate('/');
       }
     }
+    setisLoading(false);
   };
 
   useEffect(() => {
@@ -187,6 +204,7 @@ const { t } = useTranslation();
   return (
     <div className="signUp">
       <CustomNav />
+      {isLoading? <div className='loading'><ReactLoading type="spin" color="#000" /></div> : <>
       <div className="signup-grid">
         <form onSubmit={handleSubmit} className="signup-form">
           <div className="addtionalC-container">
@@ -232,7 +250,15 @@ const { t } = useTranslation();
                     value={dob}
                     label={t("DateofBirthLabel")}
                     onChange={(newValue) => {
-                      setDob(newValue);
+                      if(newValue>new Date()  || newValue.$d.toString()==='Invalid Date'){
+                          
+                        setdobErrorFlag(true);
+                        
+                      }else{
+                        setDob(newValue);
+                        setdobErrorFlag(false);
+                        //console.log("dob:",dob);
+                      }
                     }}
                     maxDate={new Date()}
                     required
@@ -280,10 +306,7 @@ const { t } = useTranslation();
               </FormControl>
             </div>
 
-            {/* <div className='signup-field'>
-                  <label htmlFor="photo">Profile Photo:</label>
-                  <input type="file" id="photo" onChange={handlePhotoChange}/>
-                </div> */}
+            
 
             <div className="addtionalC-field">
               <div className="addtionalC-phone-input">
@@ -331,6 +354,16 @@ const { t } = useTranslation();
               </div>
             </div>
 
+            <div className='addtionalC-field'>
+                <div className='addtionalC-field-profile-photo'>
+                  <Avatar src={previewImage}
+                    sx={{ width: 100, height: 100 }}
+                        >     
+                        </Avatar>
+                  <input type="file" id="photo" className='photo-field' onChange={handlePhotoChange}/>
+                </div>
+              </div> 
+
             <div className="addtionalC-field">
               <Button
                 variant="outlined"
@@ -357,6 +390,7 @@ const { t } = useTranslation();
           <img src={image} alt="login-img" className="actual-img" />
         </div>
       </div>
+      </>}
     </div>
   );
 }

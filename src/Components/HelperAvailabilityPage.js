@@ -11,6 +11,7 @@ import { Button } from "@mui/material";
 import i18n from "../Translation/i18n";
 import { initReactI18next, useTranslation, Translation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { toast, ToastContainer } from "react-toastify";
 const HelperAvailabilityPage = () => {
   const { t } = useTranslation();
   const [date, setDate] = useState(null);
@@ -91,6 +92,16 @@ const HelperAvailabilityPage = () => {
 
     try {
       await editAvailability(showAvailability);
+      toast.success(t("UpdateProfile"), {
+        position: "bottom-left",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
     } catch (error) {
       console.error("error", error);
     }
@@ -334,6 +345,18 @@ const HelperAvailabilityPage = () => {
           {t("SaveBtn")}
         </Button>
       </div>
+      <ToastContainer
+          position="bottom-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          />
     </div>
   );
 };

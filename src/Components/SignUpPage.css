@@ -1,6 +1,6 @@
 .signUp{
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   background-color: #ECF7E6;
 }
 
@@ -67,9 +67,7 @@
     
 }
 
-.signup-form input[type="file"] {
-    margin-bottom: 0;
-}
+
 
 .signup-form select {
     height: 40px;
@@ -86,26 +84,7 @@
     margin-top: 5px;
   }
   
-  .file-upload-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-  }
   
-  .file-upload-container label {
-    margin-right: 10px;
-  }
-  
-  .file-upload-container input[type="file"] {
-    display: none;
-  }
-  
-  .file-upload-container .file-name {
-    font-size: 14px;
-    font-weight: bold;
-    color: gray;
-    margin-left: 10px;
-  }
 
   .phone-input{
     display: flex;
@@ -151,6 +130,22 @@
 
   .addtionalH-date{
     padding-top: 15%;
+  }
+
+
+  .addtionalH-field .addtionalH-field-profile-photo{
+    display: flex;
+    flex-direction: row;
+    padding-top: 10%;
+    align-items: center;
+    
+  }
+
+  .addtionalC-field-profile-photo{
+    display: flex;
+    flex-direction: row;
+    padding-top: 10%;
+    align-items: center;
   }
 
   @media screen and (max-width: 720px)
@@ -201,9 +196,7 @@
     border: 1px solid #ccc;
 }
 
-.signup-form input[type="file"] {
-    margin-bottom: 0;
-}
+
 
 .signup-form select {
     height: 40px;
@@ -220,26 +213,7 @@
     margin-top: 5px;
   }
   
-  .file-upload-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-  }
-  
-  .file-upload-container label {
-    margin-right: 10px;
-  }
-  
-  .file-upload-container input[type="file"] {
-    display: none;
-  }
-  
-  .file-upload-container .file-name {
-    font-size: 14px;
-    font-weight: bold;
-    color: gray;
-    margin-left: 10px;
-  }
+ 
 
   .phone-input{
     display: flex;

@@ -3,14 +3,18 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import './ProfilePage.css';
 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import { additionalDetails, displayCustomerProfile, logout } from '../Routes/Login/AuthService';
 import { useNavigate } from 'react-router-dom';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
-import { Button, FormControl, FormHelperText, InputAdornment, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Avatar, Button, FormControl, FormHelperText, InputAdornment, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { AccountCircle, LocalPhone, Mail } from '@mui/icons-material';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import i18n from "../Translation/i18n";
-import { initReactI18next, useTranslation, Translation } from "react-i18next";
+import { useTranslation  } from "react-i18next";
+
 const CustomerProfilePage = () => {
     const { t } = useTranslation();
     const [firstName, setFirstName] = useState("");
@@ -33,6 +37,9 @@ const CustomerProfilePage = () => {
     const navigate = useNavigate();
   
     const [isLoading, setisLoading] = useState(false);
+
+    const [photo, setphoto] = useState(null)
+    const [profilePhoto, setprofilePhoto] = useState(null)
 
 
     const handleFirstNameChange = (firstName) => {
@@ -92,7 +99,8 @@ const CustomerProfilePage = () => {
     
   
     const handleDobChange = (dob) => {
-      if(!dob){
+     
+      if(!dob || dobErrorFlag){
         setdobError(t("errorDOB"));
         setdobErrorFlag(true);
         return true;
@@ -100,9 +108,24 @@ const CustomerProfilePage = () => {
       else{
         setdobError("");
         setdobErrorFlag(false);
+        //console.log('DOB Error!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
         return false;
       }
     }
+
+    const handlePhotoChange = (event) => {
+      const selectedFile = event.target.files[0];
+      if (selectedFile.size > 20000000) {
+        alert(t("errorFile"));
+        return;
+      }
+      setphoto(selectedFile);
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedFile);
+      reader.onloadend = () => {
+        setprofilePhoto(reader.result);
+      };
+    };
   
   
     const handleSubmit = async (event) => {
@@ -132,11 +155,26 @@ const CustomerProfilePage = () => {
         
         return false;
       }
-      const date = (dob.$M +1)+"/"+dob.$D+"/"+dob.$y;
-      console.log("dob: ", date);
+      let date = dob;
+      console.log("dob: ", typeof dob);
+      if(typeof dob === 'object'){
+        date = (dob.$M +1)+"/"+dob.$D+"/"+dob.$y;
+      }
+      
+      
       try {
         await additionalDetails(firstName, lastName, gender, date, phone);
-        alert(t("UpdateProfile"));
+        toast.success(t("UpdateProfile"), {
+          position: "bottom-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
+        //toast(t("UpdateProfile"));
       } catch (error) {
         console.error('error', error);
         if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
@@ -145,6 +183,8 @@ const CustomerProfilePage = () => {
         }
       }
     };  
+
+    
 
     useEffect( () => {
         const fetchData = async () => {
@@ -158,7 +198,7 @@ const CustomerProfilePage = () => {
                 setGender(res.user.gender);
                 setDob(res.user.dob);
                 setPhone(res.user.mob);
-               
+                setprofilePhoto(res.user.profilePhotoUrl);
                 //console.log(res.user.dob);
                 
                 //setresult(res);
@@ -185,6 +225,14 @@ const CustomerProfilePage = () => {
             <h2>{t("personaldetails")}</h2>
             <div className="profile-div">
               <div className="profile-content">
+              <div className='profilePhoto'>
+                    <Avatar src={profilePhoto}
+                    sx={{ width: 150, height: 150 }}
+                        >     
+                        </Avatar>
+                  
+                    <input type="file" id="photo" className='photo-field' onChange={handlePhotoChange} />
+                </div>
                 <TextField
                   error={fnameErrorFlag}
                   helperText={fnameError}
@@ -305,10 +353,21 @@ const CustomerProfilePage = () => {
                       value={dob}
                       sx={{ width: "70%", marginTop: "5%" }}
                       label={t("DateofBirthLabel")}
-                      onChange={(newValue) => {
-                        setDob(newValue);
-                      }}
+                      
                       maxDate={new Date()}
+                      onChange={(newValue) => {
+                        if(newValue>new Date()  || newValue.$d.toString()==='Invalid Date'){
+                          setDob(newValue);
+                          setdobErrorFlag(true);
+                          
+                        }else{
+                          setDob(newValue);
+                          setdobErrorFlag(false);
+                          //console.log("dob:",dob);
+                        }
+                        
+                      }}
+                      
                       required
                       renderInput={(params) => (
                         <TextField
@@ -344,6 +403,18 @@ const CustomerProfilePage = () => {
           </div>
         </>
       )}
+      <ToastContainer
+          position="bottom-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          />
     </div>
   );
 }

@@ -102,20 +102,24 @@ export const resendOTP = async (email) => {
   return response.data;
 };
 
-export const additionalDetails = async (first, last, gender, dob, mob) => {
+export const additionalDetails = async (first, last, gender, dob, mob, photo) => {
   const token = localStorage.getItem("User");
-  const response = await axios.put(
+
+  const formData = new FormData();
+  formData.append('firstname', first);
+  formData.append('lastname', last);
+  formData.append('dob', dob);
+  formData.append('mob', mob);
+  formData.append('gender', gender);
+  formData.append('profilePhoto', photo);
+
+  const response = await axios.post(
     `${url}/additionalDetails`,
-    {
-      firstname: first,
-      lastname: last,
-      gender: gender,
-      dob: dob,
-      mob: mob,
-    },
+    formData,
     {
       headers: {
         Authorization: `Bearer ${JSON.parse(token)}`,
+        'Content-Type': 'multipart/form-data',
       },
     }
   );
@@ -200,32 +204,76 @@ export const additionalDetailsHelper = async (
   dob,
   mob,
   bio,
-  nation
+  nation,
+  photoFile
 ) => {
   const token = localStorage.getItem("User");
-  const response = await axios.put(
-    `${url}/additional-details`,
-    {
-      firstname: first,
-      lastname: last,
-      dob: dob,
-      mob: mob,
-      gender: gender,
-      description: bio,
-      nationality: nation,
-    },
-    {
-      headers: {
-        Authorization: `Bearer ${JSON.parse(token)}`,
-      },
-    }
-  );
-  localStorage.setItem("HelperID", response.data.helper._id);
-  localStorage.setItem("LoggedIn", true);
-  console.log(response.data);
 
-  return response.data;
+  const formData = new FormData();
+  formData.append('firstname', first);
+  formData.append('lastname', last);
+  formData.append('dob', dob);
+  formData.append('mob', mob);
+  formData.append('gender', gender);
+  formData.append('description', bio);
+  formData.append('nationality', nation);
+  formData.append('profilePhoto', photoFile);
+
+  try {
+    const response = await axios.post(
+      `${url}/additional-details`,
+      formData,
+      {
+        headers: {
+          Authorization: `Bearer ${JSON.parse(token)}`,
+          'Content-Type': 'multipart/form-data'
+        },
+      }
+    );
+    localStorage.setItem("HelperID", response.data.helper._id);
+    localStorage.setItem("LoggedIn", true);
+    console.log(response);
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
 };
+
+// export const additionalDetailsHelper = async (
+//   first,
+//   last,
+//   gender,
+//   dob,
+//   mob,
+//   bio,
+//   nation,
+// ) => {
+//   const token = localStorage.getItem("User");
+//   const response = await axios.put(
+//     `${url}/additional-details`,
+//     {
+//       firstname: first,
+//       lastname: last,
+//       dob: dob,
+//       mob: mob,
+//       gender: gender,
+//       description: bio,
+//       nationality: nation,
+
+//     },
+//     {
+//       headers: {
+//         Authorization: `Bearer ${JSON.parse(token)}`,
+//       },
+//     }
+//   );
+//   localStorage.setItem("HelperID", response.data.helper._id);
+//   localStorage.setItem("LoggedIn", true);
+//   console.log(response.data);
+
+//   return response.data;
+// };
 
 export const editAvailability = async (availability) => {
   const token = localStorage.getItem("User");
@@ -237,7 +285,7 @@ export const editAvailability = async (availability) => {
       Tuesday: availability.Tuesday,
       Wednesday: availability.Wednesday,
       Thursday: availability.Thursday,
-      Friday: availability.Firday,
+      Friday: availability.Friday,
       Saturday: availability.Saturday,
       Sunday: availability.Sunday,
     },

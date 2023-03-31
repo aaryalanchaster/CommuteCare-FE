@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./SignUpPage.css";
-import logo from "../Assets/logo.jpg";
+
 import image from "../Assets/home-page.jpg";
 
 import { signUp, signUpHelper } from "../Routes/Login/AuthService";
@@ -12,12 +12,11 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import Button from "@mui/material/Button";
-
-import { FormControl, NativeSelect } from "@mui/material";
+import ReactLoading from 'react-loading';
 
 
 import i18n from "../Translation/i18n";
-import { initReactI18next, useTranslation, Translation } from "react-i18next";
+import { useTranslation } from "react-i18next";
 import CustomNav from "./CustomNav";
 
 const SignUpPage = (props) => {
@@ -31,6 +30,7 @@ const SignUpPage = (props) => {
   const [confirmPasswordFlag, setConfirmPasswordFlag] = useState(false);
   const [passwordError, setPasswordError] = useState("");
   const [confrimPassError, setConfrimPassError] = useState("");
+  const [isLoading, setisLoading] = useState(false);
 
   const [error, seterror] = useState("");
 
@@ -118,21 +118,25 @@ const SignUpPage = (props) => {
     }
     if (props.data === "Customer") {
       try {
+        setisLoading(true);
         await signUp(email, password, props.data);
         navigate("/emailVerification", { state: { data: email } });
       } catch (error) {
         console.error("error", error);
         seterror(error.response.data.message);
       }
+      setisLoading(false);
     }
     if (props.data === "Helper") {
       try {
+        setisLoading(true);
         await signUpHelper(email, password, props.data);
         navigate("/emailVerification", { state: { data: email } });
       } catch (error) {
         console.error("error", error);
         seterror(error.response.data.message);
       }
+      setisLoading(false);
     }
   };
 
@@ -146,6 +150,7 @@ const SignUpPage = (props) => {
   return (
     <div className="signUp">
       <CustomNav />
+      {isLoading? <div className='loading'><ReactLoading type="spin" color="#000" /></div> : <>
       <div className="signup-grid">
         <form onSubmit={handleSubmit} className="signup-form">
           {/*<h2>SignUp</h2> */}
@@ -270,6 +275,7 @@ const SignUpPage = (props) => {
           <img src={image} alt="login-img" className="actual-img" />
         </div>
       </div>
+      </>}
     </div>
   );
 };

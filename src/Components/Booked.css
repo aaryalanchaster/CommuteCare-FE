@@ -2,7 +2,7 @@
     width: 100%;
     padding-top: 5%;
     background-color: #ECF7E6;
-    height: 100vh;
+    min-height: 100vh;
 }
 
 .booked-container{

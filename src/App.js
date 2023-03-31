@@ -12,7 +12,7 @@ import EmailVerification from "./Routes/EmailVerification";
 import SignUp from "./Routes/SignUp";
 import AdditionalDetails from "./Routes/AdditionalDetails";
 import HelperHome from "./Routes/HelperHome";
-import HelperAvailability from "./Routes/HelperAvailability";
+
 import ForgotPassword from "./Routes/ForgotPassword";
 import NewPassword from "./Components/NewPassword";
 import HelperProfile from "./Routes/HelperProfile";
@@ -36,7 +36,7 @@ function App() {
         <Route path="/emailVerification" element={<EmailVerification />} />
 
         <Route path="/helperHome" element={<HelperHome />} />
-        <Route path="/helperAvailability" element={<HelperAvailability />} />
+        
         <Route path="/customer" element={<Customer />} />
         {/* <Route path="/helper" element={<Helper />} /> */}
         <Route path="/availableHelpers" element={<AvailableHelpers />} />

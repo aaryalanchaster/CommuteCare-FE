@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import { displayAvailHelperList, logout } from '../Routes/Login/AuthService';
 
 import ReactLoading from 'react-loading';
-import { Button } from '@mui/material';
+import { Avatar, Button, Rating } from '@mui/material';
 import i18n from "../Translation/i18n";
 import { initReactI18next, useTranslation, Translation } from "react-i18next";
   const days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
@@ -21,6 +21,8 @@ const { t } = useTranslation();
 
   const navigate = useNavigate();
   const user = localStorage.getItem("User");
+
+  const [profilePhoto, setprofilePhoto] = useState(null);
 
 
   const [jwtError, setjwtError] = useState("");
@@ -107,7 +109,10 @@ const { t } = useTranslation();
                   >
                     <div className="helper-details-front">
                       <div className="left">
-                        <BsPersonCircle size={100} />
+                      <Avatar src={person.profilePhotoUrl}
+                        sx={{ width: 125, height: 125 }}
+                            >     
+                        </Avatar>
                       </div>
 
                       <div className="right">
@@ -119,6 +124,7 @@ const { t } = useTranslation();
                         <p>
                           {t("GenderLabel")}: {person.gender}
                         </p>
+                        <Rating name="read-only" value={person.rating} precision={0.5} readOnly />
 
                         <div className="buttons">
                           <Button

@@ -100,6 +100,7 @@ const History = () => {
     i18n.changeLanguage(localStorage.getItem('lang'));
   }, [isCurrentBookings, isrefresh]);
 
+  console.log("Booking:", bookings)
   return (
     <div className="history">
       {isLoading? <div className='loading'><ReactLoading type="spin" color="#000" /></div> : <>

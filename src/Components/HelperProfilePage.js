@@ -6,13 +6,14 @@ import { nationalityPlaces } from '../Assets/data';
 
 import { additionalDetailsHelper, displayHelperProfile, logout } from '../Routes/Login/AuthService';
 import { useNavigate } from 'react-router-dom';
-import { Button, FormControl, FormHelperText, InputAdornment, InputLabel, MenuItem, Select, TextField } from '@mui/material';
+import { Avatar, Button, FormControl, FormHelperText, InputAdornment, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { AccountCircle, LocalPhone, Mail, PhoneAndroid } from '@mui/icons-material';
 import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 import i18n from "../Translation/i18n";
 import { initReactI18next, useTranslation, Translation } from "react-i18next";
+import { toast, ToastContainer } from 'react-toastify';
 const HelperProfilePage = () => {
  const { t } = useTranslation();
     const [email, setemail] = useState("");
@@ -40,6 +41,9 @@ const HelperProfilePage = () => {
     const [bio, setbio] = useState("");
     const [bioErrorFlag, setbioErrorFlag] = useState(false);
     const [bioError, setbioError] = useState("");
+
+    const [photo, setphoto] = useState(null)
+    const [profilePhoto, setprofilePhoto] = useState(null)
 
     const navigate = useNavigate();
 
@@ -72,7 +76,7 @@ const HelperProfilePage = () => {
     };
   
     const handleDobChange = (dob) => {
-      if(!dob){
+      if(!dob || dobErrorFlag){
         setdobError(t("errorDOB"));
         setdobErrorFlag(true);
         return true;
@@ -173,10 +177,24 @@ const HelperProfilePage = () => {
         }
         return false;
       }
-      const date = (dob.$M +1)+"/"+dob.$D+"/"+dob.$y;
+      let date = dob;
+      console.log("dob: ", typeof dob);
+      if(typeof dob === 'object'){
+        date = (dob.$M +1)+"/"+dob.$D+"/"+dob.$y;
+      }
       try {
-        await additionalDetailsHelper(firstName, lastName, gender, date, phone, bio, nationality);
-        alert(t("UpdateProfile"));
+        await additionalDetailsHelper(firstName, lastName, gender, date, phone, bio, nationality, photo);
+        toast.success(t("UpdateProfile"), {
+          position: "bottom-left",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
+        
       } catch (error) {
         console.error('error', error);
         if(error.response.data.message==="jwt expired" || error.response.data.message==='jwt malformed'){
@@ -186,6 +204,20 @@ const HelperProfilePage = () => {
       }
 
       
+    };
+
+    const handlePhotoChange = (event) => {
+      const selectedFile = event.target.files[0];
+      if (selectedFile.size > 20000000) {
+        alert(t("errorFile"));
+        return;
+      }
+      setphoto(selectedFile);
+      const reader = new FileReader();
+      reader.readAsDataURL(selectedFile);
+      reader.onloadend = () => {
+        setprofilePhoto(reader.result);
+      };
     };
 
 
@@ -206,6 +238,7 @@ const HelperProfilePage = () => {
                 // setBookings(res.helper.bookings);
                 setNationality(res.helper.nationality);
                 setbio(res.helper.description);
+                setprofilePhoto(res.helper.profilePhotoUrl);
                 //setAvailability(res.helper.availability);
                 //setresult(res);
                 //console.log(res.helper.dob);
@@ -234,6 +267,15 @@ const HelperProfilePage = () => {
             <h2>{t("personaldetails")}</h2>
             <div className="profile-div">
               <div className="profile-content">
+                <div className='profilePhoto'>
+                    <Avatar src={profilePhoto}
+                    sx={{ width: 150, height: 150 }}
+                        >     
+                        </Avatar>
+                  
+                    <input type="file" id="photo" className='photo-field' onChange={handlePhotoChange} />
+                </div>
+                  
                 <TextField
                   error={fnameErrorFlag}
                   helperText={fnameError}
@@ -354,7 +396,16 @@ const HelperProfilePage = () => {
                       sx={{ width: "70%", marginTop: "5%" }}
                       label={t("DateofBirthLabel")}
                       onChange={(newValue) => {
-                        setDob(newValue);
+                        if(newValue>new Date()){
+                          
+                          setdobErrorFlag(true);
+                          
+                        }else{
+                          setDob(newValue);
+                          setdobErrorFlag(false);
+                          //console.log("dob:",dob);
+                        }
+                        
                       }}
                       maxDate={new Date()}
                       required
@@ -437,6 +488,18 @@ const HelperProfilePage = () => {
           </div>
         </>
       )}
+        <ToastContainer
+          position="bottom-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+          />
     </div>
   );
 }
