@@ -6,9 +6,14 @@ CommuteCare provides users with an option to pre-book helpers, who can help them
 ## Features
 
 - Provides human assistance to the user
-- Login for both Helpers and Customers
+- Login and SignUp page for both Helpers and Customers
 - Allows pre-booking of helper to guarantee help
+- Allows helpers to add their availability
 - Application is available in two languages - English and French
+- Chat feature to contact the helpers
+- Review feature to review each helper upon completion of the request
+- Report feature to report any issues
+-
 
 ## Website
 
