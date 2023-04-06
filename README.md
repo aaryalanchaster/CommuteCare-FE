@@ -43,3 +43,15 @@ Deployed Application - https://commutecare.vercel.app
 - Create an Account/Login
 - Book if Helper using for the required date and time
 - Contact the helper for further details and assurance
+
+## References
+
+React Documentation - https://reactjs.org/docs/getting-started.html
+
+Axios Documentation - https://axios-http.com/docs/intro
+
+Material-UI Components - https://material-ui.com/components/
+
+React libraries from npm JS - https://www.npmjs.com/
+
+Stack Overflow - https://stackoverflow.com/
